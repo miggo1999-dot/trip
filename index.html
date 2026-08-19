@@ -130,6 +130,2813 @@
       gap: 3px;
     }
 
+    /* ✈️ 專屬航班資訊卡片 */
+    .flight-info-card {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      border-radius: 18px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 14px rgba(155, 114, 207, 0.06);
+    }
+    .flight-info-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .flight-box {
+      background: var(--lavender-pastel);
+      padding: 6px 10px;
+      border-radius: 12px;
+      border-left: 3.5px solid var(--lavender-primary);
+    }
+    .flight-box.pig {
+      border-left-color: var(--accent-badge);
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 18px 14px 14px;
+      background: linear-gradient(145deg, #FFFFFF 0%, var(--lavender-pastel) 60%, var(--lavender-light) 100%);
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(155, 114, 207, 0.12);
+      margin-bottom: 12px;
+      border: 2.5px solid var(--lavender-border);
+      position: relative;
+    }
+
+    .theme-emoji-badge {
+      font-size: 1.8rem;
+      margin-bottom: 2px;
+      outline: none;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 16px;
+      margin-bottom: 6px;
+      outline: none;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--lavender-dark);
+      margin-bottom: 2px;
+      font-weight: 800;
+      outline: none;
+      word-break: break-word;
+    }
+
+    header p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      outline: none;
+    }
+
+    /* 語言切換膠囊 */
+    .lang-capsules {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .lang-pill {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-pill.active {
+      background: var(--lavender-primary);
+      color: white;
+    }
+
+    /* 主題膠囊欄 */
+    .theme-scroll-bar {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      padding: 4px 2px 10px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .theme-scroll-bar::-webkit-scrollbar { display: none; }
+
+    .theme-pill-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-border);
+      color: var(--text-dark);
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .theme-pill-btn.active {
+      background: var(--lavender-primary);
+      color: #fff;
+      border-color: var(--lavender-primary);
+    }
+
+    /* 每日分頁滑動 */
+    .day-scroll-nav {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      padding: 4px 2px 12px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .day-scroll-nav::-webkit-scrollbar { display: none; }
+
+    .day-tab-btn {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .day-tab-btn.active {
+      background: var(--accent-badge);
+      color: white;
+      border-color: var(--accent-badge);
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(216, 90, 127, 0.25);
+    }
+
+    /* 頁面切換 */
+    .page-view {
+      display: none;
+    }
+    .page-view.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 卡片與內容 */
+    .mobile-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 16px 14px;
+      border: 2px solid var(--lavender-border);
+      box-shadow: 0 4px 18px rgba(155, 114, 207, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .mobile-card-header {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 2px dashed var(--lavender-light);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+
+    .header-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-card-title-ko {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      outline: none;
+    }
+
+    .mobile-card-title-zh {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      outline: none;
+    }
+
+    .mobile-card-badge {
+      font-size: 0.8rem;
+      background: var(--lavender-pastel);
+      color: var(--lavender-dark);
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    /* 🏨 當日入住飯店提示欄 */
+    .hotel-stay-bar {
+      background: linear-gradient(135deg, #FFF0F5, #F3ECFA);
+      border: 1.5px solid var(--accent-badge);
+      border-radius: 14px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hotel-stay-icon { font-size: 1.3rem; }
+    .hotel-stay-info { flex: 1; }
+    .hotel-stay-title-ko { font-size: 0.88rem; font-weight: 800; color: #8E2A59; outline: none; }
+    .hotel-stay-title-zh { font-size: 0.78rem; font-weight: 700; color: #A05273; outline: none; }
+
+    /* 照片容器與防遮擋按鈕 */
+    .mobile-banner {
+      width: 100%;
+      height: 165px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      position: relative;
+      background-color: var(--lavender-light);
+      border: 1.5px solid var(--lavender-border);
+    }
+    .mobile-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .banner-edit-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 50;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: auto;
+    }
+    .banner-edit-btn:active {
+      transform: scale(0.96);
+    }
+
+    .place-img-edit-btn {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      pointer-events: auto;
+    }
+    .place-img-edit-btn:active {
+      transform: scale(0.96);
+    }
+
+    .banner-caption {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(56, 46, 71, 0.78);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 10px;
+      backdrop-filter: blur(4px);
+      z-index: 10;
+    }
+
+    /* 時間軸項目 */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 10px;
+      bottom: 10px;
+      width: 2.5px;
+      background: var(--lavender-light);
+      border-radius: 2px;
+    }
+
+    .item {
+      position: relative;
+      margin-bottom: 16px;
+      padding-right: 28px;
+    }
+    .item::before {
+      content: '🌸';
+      position: absolute;
+      left: -20px;
+      top: 1px;
+      font-size: 0.85rem;
+    }
+
+    .item-del-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: transparent;
+      border: none;
+      color: #C0AFD6;
+      font-size: 1.1rem;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .item-time {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--lavender-primary);
+      margin-bottom: 2px;
+      display: inline-block;
+      outline: none;
+    }
+
+    .item-content {
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      padding: 2px 0;
+      border-radius: 4px;
+      word-break: break-word;
+    }
+
+    .item-trans {
+      font-size: 0.86rem;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-top: 4px;
+      display: block;
+      border-left: 3px solid var(--lavender-primary);
+      outline: none;
+      word-break: break-word;
+    }
+
+    [contenteditable="true"]:focus {
+      background: #FFFDF0 !important;
+      box-shadow: 0 0 0 2px var(--lavender-primary);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .tag-food { background-color: var(--tag-food); color: #8A4B20; }
+    .tag-cafe { background-color: var(--tag-cafe); color: #1E6B7B; }
+    .tag-spa { background-color: var(--tag-spa); color: #6D3D8E; }
+    .tag-spot { background-color: var(--tag-spot); color: #215494; }
+    .tag-hotel { background-color: #FFD1DC; color: #8E2A59; }
+
+    .mobile-add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      background: var(--bg-lavender);
+      border: 1.5px dashed var(--lavender-primary);
+      border-radius: 16px;
+      color: var(--lavender-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 10px;
+    }
+
+    /* 手機版卡片列表 */
+    .mobile-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .place-card-m {
+      background: #FFFFFF;
+      border-radius: 18px;
+      border: 2px solid var(--lavender-border);
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(155, 114, 207, 0.06);
+      position: relative;
+    }
+
+    .place-img-m {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      background: var(--lavender-light);
+      display: block;
+    }
+
+    .place-body-m {
+      padding: 12px;
+    }
+
+    .place-title-ko {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      margin-bottom: 2px;
+      outline: none;
+    }
+
+    .place-title-zh {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #7B6894;
+      margin-bottom: 4px;
+      outline: none;
+    }
+
+    .place-desc-ko {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #4A3B5E;
+      margin-bottom: 4px;
+      outline: none;
+      word-break: break-word;
+    }
+
+    .place-desc-zh {
+      font-size: 0.82rem;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      outline: none;
+      word-break: break-word;
+    }
+
+    .place-link-m {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--lavender-pastel);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    /* 底部 App 固定導覽列 (Bottom Tab Bar) */
+    .app-tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1.5px solid var(--lavender-border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 2px calc(6px + var(--safe-bottom));
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+    }
+
+    .tabbar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      flex: 1;
+      padding: 4px 0;
+      transition: all 0.2s;
+    }
+
+    .tabbar-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .tabbar-item.active {
+      color: var(--lavender-primary);
+      transform: translateY(-2px);
+      font-weight: 800;
+    }
+
+    /* 彈窗 Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(56, 46, 71, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-sheet {
+      background: #FFFFFF;
+      border-radius: 28px 28px 0 0;
+      border-top: 3px solid var(--lavender-border);
+      width: 100%;
+      max-width: 600px;
+      padding: 20px 18px calc(20px + var(--safe-bottom));
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
+      animation: slideUp 0.25s ease;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .form-group { margin-bottom: 10px; }
+    .form-group label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--lavender-dark);
+      margin-bottom: 3px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--lavender-border);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .modal-btns button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+    }
+    .btn-submit { background: var(--lavender-primary); color: white; }
+    .btn-cancel { background: var(--lavender-pastel); color: var(--lavender-dark); }
+
+    /* 輕量儲存/同步氣泡 */
+    .save-toast {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-30px);
+      background: var(--lavender-dark);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 3000;
+      pointer-events: none;
+    }
+    .save-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 0.96;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ☁️ 雲端即時同步與專屬網址分享列 -->
+  <div class="sync-status-bar">
+    <div class="sync-indicator">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncStatusText">실시간 클라우드 동기화</span>
+    </div>
+    <div class="sync-btn-group">
+      <button class="reset-plan-btn" onclick="forceResetToLatestPlan()">
+        <span>🔄</span>
+        <span>최신 일정 로드 (載入最新行程)</span>
+      </button>
+      <button class="share-link-btn" onclick="copyShareableLink()">
+        <span>🔗</span>
+        <span>공유 링크 (複製網址)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ✈️ 專屬航班資訊卡片 -->
+  <div class="flight-info-card">
+    <div class="flight-info-title">
+      <span>✈️</span>
+      <span>항공편 & 만남 일정 (專屬航班與集合時間)</span>
+    </div>
+    <div class="flight-grid">
+      <div class="flight-box">
+        <div style="color:var(--lavender-primary); font-weight:800;">🎀 DORAMI</div>
+        <div>8/25 13:25 抵達 (Arrived)</div>
+        <div>9/01 13:10 出發 (Leave)</div>
+      </div>
+      <div class="flight-box pig">
+        <div style="color:var(--accent-badge); font-weight:800;">🐷 PIG</div>
+        <div>8/25 18:10 抵達 (Arrived)</div>
+        <div>9/01 19:00 出發 (Leave)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🎨 主題切換 (橫向滑動) -->
+  <div class="theme-scroll-bar">
+    <button class="theme-pill-btn active" onclick="applyPresetTheme('dorami')">🎀 哆啦美&小豬</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('miffy')">🐰 米飛夢幻淡紫</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('sakura')">🌸 浪漫櫻花粉</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('matcha')">🍵 森林抹茶綠</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('ocean')">🌊 蔚藍海岸</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="theme-emoji-badge" id="headerEmoji" contenteditable="true">🎀 🐷 🌸 🥭</div>
+    <div><span class="header-badge" id="headerBadge" contenteditable="true">Dorami & Piggy's Lavender Paradise 💜</span></div>
+    <h1 id="headerTitle" class="trans-src-ko" contenteditable="true">도라미 & 피기 다낭·호이안 8박7일</h1>
+    <p id="headerSubtitle" class="trans-src-zh" contenteditable="true">哆啦美 & 小豬的峴港・會安 8天7夜慢活手冊</p>
+
+    <!-- 語言切換膠囊 -->
+    <div class="lang-capsules">
+      <button class="lang-pill active" onclick="setLangMode('both')">🇰🇷+🇹🇼 雙語</button>
+      <button class="lang-pill" onclick="setLangMode('ko')">🇰🇷 한국어</button>
+      <button class="lang-pill" onclick="setLangMode('zh')">🇹🇼 中文</button>
+    </div>
+  </header>
+
+
+  <!-- ==================== 頁面 1: 每日行程 ==================== -->
+  <div id="tab-itinerary" class="page-view active">
+    <div class="day-scroll-nav">
+      <button class="day-tab-btn active" onclick="switchDaySub('d1', this)">Day 1 (8/25)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d2', this)">Day 2 (8/26)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d3', this)">Day 3 (8/27)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d4', this)">Day 4 (8/28)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d5', this)">Day 5 (8/29)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d6', this)">Day 6 (8/30)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d7', this)">Day 7 (8/31)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d8', this)">Day 8 (9/01)</button>
+    </div>
+
+    <div id="itinerary-content">
+      <!-- DAY 1 -->
+      <div id="d1" class="day-panel active">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">✈️ 다낭 도착 & 호텔 만남 & 미쉐린 씨푸드</div>
+              <div class="mobile-card-badge" contenteditable="true">8/25 (화/二)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">抵達峴港・飯店集合＆米其林海鮮之夜</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 무엉탄 럭셔리 다낭 호텔 (Mường Thanh Luxury Da Nang Hotel)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：峴港奢華海景飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" alt="峴港夜景">
+            <div class="banner-caption">다낭 한강 야경 (峴港漢江夜景)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:25</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">DORAMI 도착 ✈️</span> DORAMI 다낭 공항 도착 (13:25 Arrive), 그랩 타고 시내 호텔 체크인 후 짐 풀고 휴식</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">DORAMI 班機抵達峴港（13:25 Arrived），出關後叫 Grab 直達市區飯店 Check-in 卸下行李稍作休息。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">18:10 – 19:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">PIG 도착 & 만남 ✈️</span> PIG 다낭 공항 도착 (18:10 Arrive), 19:30경 호텔에서 반가운 만남! 💕</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">PIG 班機抵達峴港（18:10 Arrived），出關叫 Grab 前往飯店，約 19:30 甜蜜會合！💕</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">20:00 – 21:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">미쉐린 씨푸드</span> <b>Mộc quán Seafood Đà Nẵng</b> 미쉐린 추천 버터갈릭 랍스터 & 치즈 굴구이 저녁식사</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">享用預訂好的 Mộc quán Seafood 米其林推薦海鮮（招牌奶油蒜蓉龍蝦、起司生蠔大餐）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">21:30 – 22:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">야경 산책</span> 한강(Han River) 변 시원한 바람 맞으며 산책 후 호텔에서 푹 쉬기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">漫步韓江畔吹風看夜景，散步回飯店早點休息補充體力。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d1')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div id="d2" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🏮 호이안 이동 & 올드타운 & 망고빙수(Ubebe)</div>
+              <div class="mobile-card-badge" contenteditable="true">8/26 (수/三)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">前往會安・古鎮街景＆Ubebe芒果雪花冰＆放水燈</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 호이안 올드타운 리조트 / 부티크 호텔 (Hoi An Resort)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：會安古鎮度假村 / 精品飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="會安街景">
+            <div class="banner-caption">호이안 올드타운 (會安古鎮街景)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:30 – 12:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true">느긋하게 체크아웃 후 그랩으로 호이안 리조트 이동 (약 40분 소요)</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">睡飽退房，搭 Grab 直達會安度假飯店辦理入住放行李。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">12:30 – 13:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심</span> <b>Madam Khanh / Bánh Mì Phượng</b> 전설의 반미 맛보기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Madam Khanh 或 Bánh Mì Phượng 享用傳奇脆皮越式法國麵包。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:00 – 15:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">올드타운 산책</span> 호이안 올드타운 거리 구경, <b>Uncle huan coffee</b> & 노란 벽 인생샷</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">漫步會安古鎮老街（Old Town），品嚐 Uncle huan coffee 並穿梭黃色老宅拍照打卡。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">15:30 – 16:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">망고빙수 🍧</span> <b>Ubebe Hoi An / Tiệm Chè Xíu</b> 달콤한 디저트 타임!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Ubebe Hoi An 必吃芒果雪花冰 或是 Tiệm Chè Xíu 傳統甜湯消暑！🍧</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">17:00 – 18:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Coral Spa Hoi An</b> 90분 커플 아로마 에센셜 오일 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Coral Spa Hoi An 享受 90 分鐘雙人天然香氛精油按摩放鬆。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 21:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">올드타운 야경</span> 투본강 소원배 띄우기 & <b>Morning Glory Original</b> 저녁식사</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">秋盆河搭扁舟放水燈許願，晚餐品嚐 Morning Glory 經典白玫瑰與高樓麵。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d2')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div id="d3" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🥥 바구니배 & 논뷰 카페 & 안방비치 선셋</div>
+              <div class="mobile-card-badge" contenteditable="true">8/27 (목/四)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">椰林桶船・稻田咖啡・海灘夕陽調酒</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 호이안 리조트 / 안방비치 호텔 (Hoi An Stay)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：會安度假村 / 獨棟 Villa (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="海灘風景">
+            <div class="banner-caption">안방비치 해변 힐링 (安邦海灘度假日落)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:00 – 13:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">체험</span> <b>Breeze Restaurant & Basket Boat</b> 코코넛 바구니배 탑승 & 스핀 쇼</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">迦南島體驗特色椰林桶船旋轉舞（避開早晨團客）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:30 – 15:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">논뷰 카페</span> <b>Roving Chillhouse</b> 논 한가운데서 시원한 커피 & 힐링</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Roving Chillhouse 稻田中央草席木棧道吹微風喝咖啡。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">16:30 – 18:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">선셋 비치</span> 안방비치(An Bang Beach) <b>The Deck House / Salt & Sand</b> 쇼핑 & 일몰</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">安邦海灘 The Deck House 喝調酒看海，順遊 Salt & Sand 度假服飾店。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 20:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Pandanus Spa</b> 허브 오일 마사지 & 수제 요거트</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Pandanus Spa Hoi An 庭園草本深層按摩，結束享用特製自製優格。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d3')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 4 -->
+      <div id="d4" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🌊 다낭 컴백 & 롯데마트 쇼핑 & 용다리 불쇼</div>
+              <div class="mobile-card-badge" contenteditable="true">8/28 (금/五)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">返回峴港・Lotte Mart 採買＆海鮮熱炒＆龍橋噴火</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 미케비치 오션뷰 호텔 (My Khe Oceanview Hotel)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：美溪沙灘五星海景飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="美溪沙灘">
+            <div class="banner-caption">미케비치 푸른 바다 (美溪沙灘蔚藍海岸)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:30 – 12:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true">호이안 체크아웃 후 다낭 미케비치 앞 오션뷰 호텔 체크인</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">會安退房，搭車返回峴港入住美溪沙灘周邊海景飯店。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:00 – 14:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심</span> <b>Bếp Cuốn Đà Nẵng / Tomdo</b> 미쉐린 추천 월남쌈 & 랍스터 세트</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Bếp Cuốn Đà Nẵng 或 Tomdo 精緻越式春捲拼盤與龍蝦料理。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:30 – 16:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">카페</span> <b>Cộng Cà Phê / Tân Coffee</b> 코코넛 스무디 커피 즐기기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Cộng Cà Phê 或 Tân Coffee 招牌椰子冰沙咖啡 享受冷氣午茶。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">16:30 – 18:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">마트 쇼핑 🛍️</span> <b>Lotte Mart Supermarket (롯데마트)</b> 망고젤리, 기념품 쇼핑!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Lotte Mart Supermarket 樂天超市採買伴手禮（芒果乾、腰果、越南咖啡、零食）買齊回飯店放！🛍️</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 20:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">저녁</span> <b>Bé Mặn</b> 현지인 인기 해변 해산물 포차 디너</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Bé Mặn 美溪沙灘旁現炒活海鮮大排檔。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">21:00 – 21:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">불쇼</span> <b>용다리 (Dragon Bridge)</b> 밤 9시 불쇼 & 물쇼 관람!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">前往龍橋欣賞週末限定 21:00 準時上演的震撼噴火噴水秀！</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d4')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div id="d5" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🥞 감성 브런치 & 바나힐 & 젤라또(Gelato)</div>
+              <div class="mobile-card-badge" contenteditable="true">8/29 (토/六)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">人氣早午餐・午後巴拿山佛手橋・Gelato冰淇淋</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 미케비치 오션뷰 호텔 (My Khe Hotel)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：美溪沙灘海景飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" alt="巴拿山">
+            <div class="banner-caption">바나힐 골든브릿지 (巴拿山雲霧與佛手金橋)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">10:30 – 12:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">브런치 맛집 🥞</span> <b>Trốn Hội An Coffee & Brunch / Six On Six</b> 아보카도 토스트, 브런치</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">享用清單內的質感早午餐（Trốn Hội An 或 Six On Six，酪梨吐司與鮮榨果昔）。🥞</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:00 – 17:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">바나힐</span> 전용차량 타고 바나힐 케이블카 & 손바닥 골든브릿지 투어</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">午後專車前往巴拿山 Ba Na Hills，搭高空纜車、漫步佛手黃金橋與法式小鎮。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">18:30 – 20:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Pink Spa / Herbal Spa</b> 90분 허브 핫스톤 오일 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Pink Spa 或 Herbal Spa 享受 90 分鐘草本熱石精油按摩，徹底舒緩疲勞。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">20:30 – 21:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">젤라또 🍨</span> <b>Boulevard Gelato, Pastry & Coffee</b> 수제 젤라또 디저트 타임!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">打卡 Google Map 收藏的 Boulevard Gelato 手工義式冰淇淋享受甜蜜甜點！🍨</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d5')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 6 -->
+      <div id="d6" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🌅 미케비치 일출(5AM) & 안토이(An Thoi) & 핑크성당</div>
+              <div class="mobile-card-badge" contenteditable="true">8/30 (일/日)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">美溪沙灘 5AM 日出晨光・Ăn Thôi 餐廳・粉紅教堂</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 미케비치 오션뷰 호텔 (My Khe Hotel)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：美溪沙灘海景飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="美溪沙灘日出">
+            <div class="banner-caption">미케비치 황홀한 일출 (美溪沙灘清晨日出)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">05:00 – 06:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">새벽 일출 🌅</span> <b>미케비치 5AM 일출 산책 (My Khe Beach)</b> 바다 위로 떠오르는 핑크빛 일출 감상</div>
+              <div class="item-trans trans-src-zh" contenteditable="true"><b>清晨 5:00 前往美溪沙灘看日出🌅</b>，感受清涼海風與海平面橘粉色晨光約會！</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">07:00 – 11:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true">호텔로 돌아와 꿀잠 늦잠 자기 & 여유로운 조식</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">回飯店沖涼睡個回籠覺，悠閒享用飯店早餐。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:30 – 12:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">포토존</span> 핑크성당(다낭 대성당) 인생샷 찍기 & 한시장(Chợ Hàn) 구경</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">粉紅大教堂拍照打卡 ＋ 順路走訪漢市場（Cho Han）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">12:30 – 14:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심 맛집 🍴</span> <b>안토이 레스토랑 (Ăn Thôi)</b> 노란 감성 인테리어 & 파인애플 볶음밥, 갈릭 쉬림프</div>
+              <div class="item-trans trans-src-zh" contenteditable="true"><b>Ăn Thôi 餐廳享用午餐🍴</b>，品嚐招牌鳳梨海鮮炒飯、蒜蓉鮮蝦與黃金越式煎餅！</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">15:00 – 16:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">소품샵 & 네컷사진</span> <b>CONTRAST PHOTO</b> 네컷사진 찍기 & <b>Hana 34 Vintage / Magno Archive</b> 쇼핑</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">CONTRAST PHOTO 拍韓系拍貼機留下紀念 ＋ Hana 34 飾品 / Magno Archive 古著店逛逛。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">17:00 – 19:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파</span> <b>스파필드 & 네일 & 이발소 (Spafield and Nail) / Nguon Spa</b> 대나무숲 힐링 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Spafield and Nail 或 Nguon Spa（源 Spa）享受舒壓按摩放鬆。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d6')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 7 -->
+      <div id="d7" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">💙 산토리니 오션뷰 & 헤드스파 & 칵테일바</div>
+              <div class="mobile-card-badge" contenteditable="true">8/31 (월/一)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">聖托里尼海景・草本洗頭體驗・Midnight Condo 酒吧</div>
+          </div>
+
+          <!-- 🏨 當日入住飯店 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🏨</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">오늘의 호텔: 미케비치 / 한강 오션뷰 호텔 (Danang Hotel)</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">當日入住飯店：美溪沙灘 / 漢江畔海景飯店 (可點擊修改)</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="芳療放鬆">
+            <div class="banner-caption">베트남 허브 테라피 (越式草本舒壓芳療)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:30 – 16:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">오션뷰</span> <b>Sơn Trà Marina</b> 산토리니풍 180도 파노라마 오션뷰 카페</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Sơn Trà Marina 山茶半島藍白希臘風 180 度無敵海景咖啡下午茶。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">17:30 – 19:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">헤드스파</span> <b>Trees Spa Da Nang / Koi spa & coffee</b> 천연 허브 샴푸 & 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Trees Spa Da Nang 或 Koi spa 體驗 60 分鐘越式草本滋養洗頭＋肩頸舒壓。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">20:00 – 22:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">감성 바 🍸</span> <b>Midnight Condo</b> 무드 있는 칵테일 바에서 여행의 마지막 밤 즐기기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Midnight Condo 質感微醺調酒吧，浪漫享受峴港最後一晚的夜生活！🍸</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d7')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 8 -->
+      <div id="d8" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🌿 가든 카페 & 각자 귀국 (안전한 비행! ✈️)</div>
+              <div class="mobile-card-badge" contenteditable="true">9/01 (화/二)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">庭園咖啡放空・各自搭機返程（平安順飛！✈️）</div>
+          </div>
+
+          <!-- 🏨 當日退房返程 -->
+          <div class="hotel-stay-bar">
+            <div class="hotel-stay-icon">🧳</div>
+            <div class="hotel-stay-info">
+              <div class="hotel-stay-title-ko trans-src-ko" contenteditable="true">호텔 체크아웃 & 짐 보관 후 공항 이동</div>
+              <div class="hotel-stay-title-zh trans-src-zh" contenteditable="true">飯店退房辦理寄放行李，依航班時間前往機場</div>
+            </div>
+          </div>
+
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="庭園咖啡">
+            <div class="banner-caption">그리너리 가든 카페 (綠意庭園咖啡館)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">10:30 – 11:15</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">모닝 커피</span> <b>dapen / Dreamer Coffee</b> 감성 카페에서 마지막 담소</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">dapen 或 Dreamer Coffee 咖啡館放空聊天、整理紀念品與回憶。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:15 – 13:10</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">DORAMI 귀국 ✈️</span> DORAMI 그랩 타고 공항 이동 (15분), 13:10 비행기 출발 (Leave)!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">DORAMI 叫 Grab 前往峴港機場（車程 15 分鐘），搭乘 13:10 班機返程（Leave）！✈️</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:30 – 16:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">PIG 자유시간</span> 네일아트 / 마사지 / 시내 카페 투어 즐기기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">PIG 專屬悠閒午後：逛市區精品小店、做美甲或再做一次精油 SPA。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">16:40 – 19:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">PIG 귀국 ✈️</span> PIG 공항 이동, 19:00 비행기 출발 (Leave)! 행복한 여행 완료 💕</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">PIG 叫 Grab 前往機場，搭乘 19:00 班機返程（Leave），收穫滿滿幸福回憶！💕</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d8')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 2: 交通指南 ==================== -->
+  <div id="tab-traffic" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🚗 다낭 & 호이안 교통 가이드</div>
+          <div class="mobile-card-badge" contenteditable="true">그랩 & 차량</div>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">峴港與會安完整交通指南</div>
+      </div>
+      <div class="mobile-card-list" id="traffic-list">
+        <!-- 1. 그랩 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=600&q=80" alt="그랩">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">📱 그랩 카 (Grab Car 4인승)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">📱 Grab 叫車（4人座汽車）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">가장 대중적이고 편리한 이동수단! 신용카드 등록 시 바가지 걱정 없음.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">市區與跨城首選！APP 綁定信用卡扣款，透明免殺價。</div>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--accent-badge); margin-bottom:6px;" contenteditable="true">
+              💰 시내: 30k-70k VND (₩1.6k-3.8k / NT$40-90)<br>
+              💰 다낭↔호이안: 250k-350k VND (₩13.5k-19k / NT$320-450)
+            </div>
+            <a href="https://www.grab.com/vn/en/transport/car/" target="_blank" class="place-link-m">🔗 Grab 앱 정보 (下載/介紹)</a>
+          </div>
+        </div>
+
+        <!-- 2. 바나힐 대절 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=600&q=80" alt="렌터카">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🚐 프라이빗 렌트카 (전용 대절)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🚐 專車包車服務（含司機）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">바나힐 장거리 이동 시 기사 포함 전용 차량 대절.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">前往巴拿山或遠程景點最舒適，含司機專車接送與定點等候。</div>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--accent-badge); margin-bottom:6px;" contenteditable="true">
+              💰 바나힐 왕복: 550k-700k VND (₩30k-38k / NT$700-900)
+            </div>
+            <a href="https://www.klook.com" target="_blank" class="place-link-m">🔗 클룩/KKday 차량예약</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 3: 咖啡廳 & 甜點精選 ==================== -->
+  <div id="tab-cafe" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">☕ 감성 카페 & 디저트 베스트 (15곳)</div>
+          <button class="header-badge" onclick="openAddModal('cafe')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">峴港與會安精選咖啡廳・芒果冰・Gelato・抹茶</div>
+      </div>
+      <div class="mobile-card-list" id="cafe-list">
+        
+        <!-- 1. Ubebe 망고빙수 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Ubebe 망고빙수">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍧 우베베 망고빙수 (Ubebe Hoi An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍧 Ubebe 會安人氣芒果雪花冰</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">💛 호이안 올드타운 1위 망고빙수! 시원하고 진한 생망고 가득.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安老街必吃冷氣甜品店！整顆新鮮芒果切塊雪花冰，逛街消暑首選。</div>
+            <a href="https://maps.google.com/?q=Ubebe+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. Boulevard Gelato -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=600&q=80" alt="Boulevard Gelato">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍨 불바드 수제 젤라또 (Boulevard Gelato, Pastry & Coffee)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍨 Boulevard Gelato 手工義式冰淇淋</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🍦 구글맵 저장 젤라또 맛집! 피스타치오, 패션후르츠 수제 젤라또.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">Google 地圖高分收藏名店！純手工濃郁開心果、百香果與芒果 Gelato。</div>
+            <a href="https://maps.google.com/?q=Boulevard+Gelato,+Pastry+%26+Coffee+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Trốn Hội An Coffee & Brunch -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80" alt="Trốn Hội An">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥞 촌 호이안 브런치 (Trốn Hội An Coffee & Brunch)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥞 Trốn Hội An 森林庭園早午餐咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌿 초록빛 정원 속에서 즐기는 아보카도 토스트와 브런치.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">綠意盎然的隱密庭園，享用精緻酪梨吐司、早午餐拼盤與冷萃咖啡。</div>
+            <a href="https://maps.google.com/?q=Tr%E1%BB%91n+H%E1%BB%99i+An+Coffee+%26+Brunch" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 4. Tiệm Chè Xíu -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" alt="Tiệm Chè Xíu">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍧 찌에우 디저트 (Tiệm Chè Xíu - Chè Ngon Hội An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍧 Tiệm Chè Xíu 會安傳統甜湯＆冰品店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🥥 베트남 전통 째(Chè), 코코넛 젤리, 두리안 디저트 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">在地人超推的會安傳統甜湯！椰奶凍、水果撈與消暑甜品。</div>
+            <a href="https://maps.google.com/?q=Ti%E1%BB%87m+Ch%C3%A8+X%C3%ADu+-+Ch%C3%A8+Ngon+H%E1%BB%99i+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 5. Maison Marou Café Hoi An -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1548848221-0c2e497ed557?auto=format&fit=crop&w=600&q=80" alt="Maison Marou">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍫 메종 마루 초콜릿 (Maison Marou Café Hoi An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍫 Maison Marou 法國頂級精品巧克力咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 '베트남의 에르메스' 최고급 수제 초콜릿 & 에끌레어 디저트.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">被譽為「巧克力界愛馬仕」，頂級單品可可、閃電泡芙與精緻伴手禮。</div>
+            <a href="https://maps.google.com/?q=Maison+Marou+Caf%C3%A9+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 6. Magicha.zenbar Hoi An -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80" alt="Magicha Zenbar">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍵 마기차 젠바 (Magicha.zenbar Hoi An - Matcha)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍵 Magicha.zenbar 會安日式抹茶喫茶館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌿 호이안 올드타운 감성 젠(Zen) 스타일의 진한 프리미엄 말차.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安古鎮中的日式禪風抹茶館，品嚐手刷純抹茶與抹茶拿鐵。</div>
+            <a href="https://maps.google.com/?q=Magicha.zenbar+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 7. Uncle huan coffee -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Uncle huan coffee">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">☕ 엉클 후안 커피 (Uncle huan coffee)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">☕ Uncle huan coffee 會安古鎮街角咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">💛 올드타운 길가에서 즐기는 감성 베트남 전통 커피 & 에그커피.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安古鎮街邊超有氛圍的在地咖啡館，坐在小矮凳上品嚐濃郁越式蛋咖啡。</div>
+            <a href="https://maps.google.com/?q=Uncle+huan+coffee+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 8. Tân Coffee -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Tân Coffee">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">☕ 탄 커피 (Tân Coffee Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">☕ Tân Coffee 峴港復古紅磚工業風咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🧱 인더스트리얼 감성 & 솔트커피(소금커피), 에그커피 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">紅磚與水泥質感的超好拍人氣咖啡店，必試特調鹽咖啡（Salt Coffee）。</div>
+            <a href="https://maps.google.com/?q=T%C3%A2n+Coffee+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 9. dapen -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80" alt="dapen">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌿 다펜 카페 (dapen)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌿 dapen 峴港日系極簡微風咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">☕ 화이트 & 우드톤 인테리어의 조용하고 편안한 감성 카페.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">市區安靜質感的日系極簡純白木質調咖啡廳，適合放鬆聊天。</div>
+            <a href="https://maps.google.com/?q=dapen+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 10. Coffee ALPHA -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="Coffee ALPHA">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">☕ 커피 알파 (Coffee ALPHA)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">☕ Coffee ALPHA 峴港在地手沖專業咖啡</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 원두 향이 풍부한 현지인 추천 스페셜티 커피 전문점.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單高分收藏的在地精品咖啡館，手沖單品與特色冷萃極具口碑。</div>
+            <a href="https://maps.google.com/?q=Coffee+ALPHA+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 11. Cửa Ngõ Café -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Cua Ngo Cafe">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌿 끄어응오 카페 (Cửa Ngõ Café)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌿 Cửa Ngõ Café 峴港摩洛哥洞穴風庭園咖啡</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🏺 이국적인 아치형 인테리어와 자연 채광이 예쁜 포토존 카페.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">美溪沙灘周邊摩洛哥拱門風格庭園咖啡館，拍照打卡絕美。</div>
+            <a href="https://maps.google.com/?q=C%E1%BB%ADa+Ng%C3%B5+Caf%C3%A9+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 12. Roving Chillhouse -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Roving Chillhouse">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌾 로빙 칠하우스 (Roving Chillhouse)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌾 Roving Chillhouse 會安稻田景觀咖啡廳</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">푸른 논 한가운데 펼쳐진 데크와 빈백 소파! 일몰 힐링.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安必訪稻田景觀咖啡廳，坐在木棧道與草席上吹風看日落。</div>
+            <a href="https://maps.google.com/?q=Roving+Chillhouse+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 13. Sơn Trà Marina -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80" alt="Son Tra Marina">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌊 손트라 마리나 (Sơn Trà Marina)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌊 Sơn Trà Marina 聖托里尼無敵海景咖啡</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">블루&화이트 산토리니풍 180도 파노라마 오션뷰.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">山茶半島藍白聖托里尼風情，坐擁 180 度無敵蔚藍海景。</div>
+            <a href="https://maps.google.com/?q=Son+Tra+Marina+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 14. Xóm Mèo Coffee -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80" alt="Xom Meo Coffee">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🐱 솜 메오 고양이 카페 (Xóm Mèo Coffee)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🐱 Xóm Mèo Coffee 療癒系特色貓咪咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🐾 귀여운 고양이들과 함께 커피 마시며 힐링하는 아늑한 공간.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的在地貓咪咖啡館，環境溫馨放鬆，適合貓奴探店。</div>
+            <a href="https://maps.google.com/?q=Xom+Meo+Coffee+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 15. Cộng Cà Phê -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=600&q=80" alt="Cong Caphe">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥥 콩카페 (Cộng Cà Phê)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥥 Cộng Cà Phê 越共椰子冰沙咖啡</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">달콤하고 시원한 코코넛 스무디 커피의 원조!</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">越南最具代表性的經典復古咖啡館，必喝濃郁香甜的椰子冰沙咖啡。</div>
+            <a href="https://maps.google.com/?q=Cong+Caphe+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 4: 美食餐廳 ==================== -->
+  <div id="tab-food" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🦞 미식 레스토랑 베스트 (18곳)</div>
+          <button class="header-badge" onclick="openAddModal('food')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">米其林必比登・特色越菜・海鮮排檔・美式漢堡</div>
+      </div>
+      <div class="mobile-card-list" id="food-list">
+        
+        <!-- 1. Ăn Thôi -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="An Thoi Restaurant">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍍 안토이 레스토랑 (Ăn Thôi Restaurant)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍍 Ăn Thôi 峴港精緻越式料理餐廳</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 파인애플 볶음밥, 갈릭버터 새우구이, 반쎄오 맛집! 노란 감성 인테리어.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">漢市場旁超高人氣越式洋房餐廳！必吃整顆鳳梨炒飯、蒜蓉鮮蝦與脆皮春捲。</div>
+            <a href="https://maps.google.com/?q=An+Thoi+Restaurant+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. Mộc quán Seafood Đà Nẵng -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=600&q=80" alt="Moc Quan">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🦞 묙콴 씨푸드 (Mộc quán Seafood Đà Nẵng)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🦞 Mộc quán Seafood 海鮮餐廳（米其林推薦）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 미쉐린 추천! 버터갈릭 랍스터 & 치즈 굴구이 대표 해산물 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">米其林推薦海鮮名店！招牌奶油蒜蓉龍蝦、起司生蠔與各式現炒海鮮。</div>
+            <a href="https://maps.google.com/?q=M%E1%BB%99c+qu%C3%A1n+Seafood+%C4%90%C3%A0+N%E1%BA%B5ng" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Nhà hàng Thiên Kim -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Thien Kim">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥢 티엔킴 레스토랑 (Nhà hàng Thiên Kim)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥢 Thiên Kim 漢江畔高級傳統越式餐廳</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 한강 뷰가 보이는 고급스러운 베트남 전통요리 (분짜, 반쎄오, 모닝글로리).</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">韓江畔環境絕佳的高級越式餐廳，招牌烤肉米線（Bún Chả）與脆皮煎餅。</div>
+            <a href="https://maps.google.com/?q=Nha+hang+Thien+Kim+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 4. Tomdo Restaurant -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Tomdo">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🦞 톰도 레스토랑 (Tomdo Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🦞 Tomdo 峴港人氣平價龍蝦料理名店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 가성비 최고 랍스터 세트 요리 (치즈구이, 칠리 랍스터, 볶음밥).</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">超高 CP 值的個人龍蝦套餐名店！起司焗烤龍蝦與黑胡椒炒蝦極具口碑。</div>
+            <a href="https://maps.google.com/?q=Tomdo+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 5. Bếp Cuốn Đà Nẵng -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80" alt="Bep Cuon">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌯 벱꾸온 다낭 (Bếp Cuốn Đà Nẵng - Michelin Selected)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌯 Bếp Cuốn Đà Nẵng 米其林精緻春捲拼盤</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 미쉐린 셀렉티드! 정갈하고 예쁜 월남쌈 플래터와 반쎄오.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">米其林指南入選名店！招牌越式春捲拼盤、烤肉煎餅與清新用餐環境。</div>
+            <a href="https://maps.google.com/?q=B%E1%BA%BFp+Cu%E1%BB%91n+%C4%90%C3%A0+N%E1%BA%B5ng" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 6. Madam Khanh -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=600&q=80" alt="Madam Khanh">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥖 마담콴 반미퀸 (Madam Khanh - The Banh Mi Queen)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥖 Madam Khanh 傳奇法國麵包</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">호이안 1위 반미! 바삭한 바게트 속 특제 소스.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">被譽為「會安第一」的傳奇越式法國麵包。</div>
+            <a href="https://maps.google.com/?q=Madam+Khanh+The+Banh+Mi+Queen" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 7. Bánh Mì Phượng -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80" alt="Banh Mi Phuong">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥖 반미프엉 (Bánh Mì Phượng / Phượng 2)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥖 Bánh Mì Phượng 會安世界級法國麵包</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 앤서니 보 Bourdain이 극찬한 세계 최고의 반미 샌드위치.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">名廚安東尼波登盛讚的「世界第一越式法國麵包」，配料豐富爆汁。</div>
+            <a href="https://maps.google.com/?q=Banh+Mi+Phuong+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 8. Lò Bánh Mỳ -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80" alt="Lo Banh My">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥖 로 반미 (Lò Bánh Mỳ)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥖 Lò Bánh Mỳ 在地現烤法國麵包烘焙坊</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🥐 매일 갓 구워내는 바삭하고 따뜻한 현지식 바게트 빵집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的在地傳統現烤烘焙坊，外脆內軟的越式法棍麵包。</div>
+            <a href="https://maps.google.com/?q=L%C3%B2+B%C3%A1nh+M%E1%BB%B3+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 9. Cao lầu Không Gian Xanh -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80" alt="Cao lau">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍜 콩지안싼 까오러우 (Cao lầu Không Gian Xanh)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍜 Không Gian Xanh 會安道地高樓麵名店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🥢 호이안 대표 전통 국수 까오러우(Cao Lầu) & 바삭한 완탕 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安古鎮必吃傳統高樓麵（Cao Lầu）與炸雲吞，在地人高分推薦。</div>
+            <a href="https://maps.google.com/?q=Cao+lau+Khong+Gian+Xanh+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 10. Bé kem kitchen -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=600&q=80" alt="Be kem kitchen">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍲 베켐 키친 (Bé kem kitchen)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍲 Bé kem kitchen 溫馨越式家常料理</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">💛 시타딘 리조트 맞은편, 깔끔하고 정갈한 베트남 아시안 요리 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">度假村周邊超好評的平價乾淨越式家常餐廳，海鮮與炒飯極佳。</div>
+            <a href="https://maps.google.com/?q=Be+kem+kitchen+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 11. Tan Phat Restaurant - Hoi An -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Tan Phat">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥢 탄팟 레스토랑 (Tan Phat Restaurant - Hoi An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥢 Tan Phat Restaurant 會安平價道地越式小館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 친절한 서비스와 화이트로즈, 완탕, 모닝글로리 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單高分推薦的會安地道小館，必吃白玫瑰水餃與炸餛飩。</div>
+            <a href="https://maps.google.com/?q=Tan+Phat+Restaurant+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 12. Morning Glory Original -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Morning Glory">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🏮 모닝글로리 오리지널 (Morning Glory Original)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🏮 Morning Glory Original 會安古鎮殿堂級老洋房餐廳</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 호이안 대표 고급 전통 레스토랑! 화이트로즈, 까오러우.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安古鎮核心地標餐廳，老洋房內享用經典精緻中越風味佳餚。</div>
+            <a href="https://maps.google.com/?q=Morning+Glory+Original+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 13. Bé Mặn -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=600&q=80" alt="Be Man">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🦐 베만 해산물 (Quán Bé Mặn)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🦐 Bé Mặn 現炒海鮮大排檔</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">미케비치 앞 대형 해산물 포차! 살아있는 싱싱한 해산물.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">美溪沙灘超人氣現炒海鮮大排檔，活海鮮秤重計價。</div>
+            <a href="https://maps.google.com/?q=Quan+Be+Man+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 14. Pause and Enjoy Restaurant -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Pause and Enjoy">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍽️ 포즈 앤 인조이 (Pause and Enjoy Restaurant)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍽️ Pause and Enjoy Restaurant 會安氛圍感精緻餐廳</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">💛 5천 개 이상의 리뷰가 증명하는 호이안 최고의 베트남 & 퓨전 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">超多歐美與亞洲遊客盛讚的會安精緻料理餐廳，烤肉串與鮮蝦煎餅極佳。</div>
+            <a href="https://maps.google.com/?q=Pause+and+Enjoy+Restaurant+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 15. The Son Bistro -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="The Son Bistro">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍷 더 손 비스트로 (The Son Bistro - Vietnamese Restaurant)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍷 The Son Bistro 會安浪漫微醺餐酒館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 와인과 함께 즐기는 현대적 감각의 베트남 퓨전 코스 요리.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">燈光美氣氛佳的古鎮餐酒館，提供精緻牛排、海鮮與越法融合菜。</div>
+            <a href="https://maps.google.com/?q=The+Son+Bistro+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 16. Nhà Hàng Việt Xưa Đà Nẵng -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Viet Xua">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🏮 비엣 쓰어 식당 (Nhà Hàng Việt Xưa Đà Nẵng)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🏮 Nhà Hàng Việt Xưa 峴港傳統復古庭園越菜館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🎋 고풍스러운 베트남 고택 분위기에서 즐기는 정통 가정식.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的古色古香木造越式大宅餐廳，品嚐道地砂鍋料理與特色海鮮。</div>
+            <a href="https://maps.google.com/?q=Nha+Hang+Viet+Xua+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 17. Bikini Bottom Express -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Bikini Bottom">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍔 비키니 바텀 익스프레스 (Bikini Bottom Express)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍔 Bikini Bottom Express 美式特色手工漢堡</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🍟 육즙 가득한 수제 버거와 바삭한 감자튀김 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的美溪海灘美式漢堡店，大份量多汁牛肉堡與薯條。</div>
+            <a href="https://maps.google.com/?q=Bikini+Bottom+Express+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 18. Le Comptoir -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80" alt="Le Comptoir">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍷 르 꽁투아 (Le Comptoir Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍷 Le Comptoir 峴港法式海鮮餐酒館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 미케비치 근처 프렌치 다이닝 & 와인 페어링 맛집.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單高分收藏的法式精緻餐酒館，海鮮冷盤、熟成牛排與美酒。</div>
+            <a href="https://maps.google.com/?q=Le+Comptoir+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 5: 按摩 SPA ==================== -->
+  <div id="tab-spa" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">💆‍♀️ 힐링 스파 & 마사지 베스트 (9곳)</div>
+          <button class="header-badge" onclick="openAddModal('spa')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">精油芳療・草本洗頭・熱石舒壓・美甲 SPA</div>
+      </div>
+      <div class="mobile-card-list" id="spa-list">
+        
+        <!-- 1. Pink Spa -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Pink Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">💖 핑크 스파 (Pink Spa Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">💖 Pink Spa 峴港粉紅大教堂前夢幻芳療</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌸 핑크성당 바로 앞! 공주풍 핑크 인테리어 & 핫스톤 아로마 마사지.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">粉紅大教堂正前方！粉嫩公主風裝潢，提供熱石精油按摩與免費行李寄放。</div>
+            <a href="https://maps.google.com/?q=Pink+Spa+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. Trees Spa Da Nang -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80" alt="Trees Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌿 트리 스파 (Trees Spa Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌿 Trees Spa Da Nang 越式草本滋養洗頭＆水療</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">💆‍♂️ 천연 허브 샴푸 헤드스파 & 전신 아로마 마사지 전문점.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的越式草本洗髮水療館，60分鐘頭皮放鬆與肩頸深層舒壓。</div>
+            <a href="https://maps.google.com/?q=Trees+Spa+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Spafield and Nail -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=600&q=80" alt="Spafield">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">💅 스파필드 & 네일 & 이발소 (Spafield and Nail)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">💅 Spafield and Nail 複合式按摩・美甲・越式理容</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 깔끔한 시설에서 즐기는 커플 마사지 & 여성 네일아트 & 베트남식 케어.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">五星好評複合會館！提供舒適雙人按摩、女生美甲造型與越式專業洗頭修護。</div>
+            <a href="https://maps.google.com/?q=Spafield+and+Nail+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 4. Koi spa & coffee -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" alt="Koi Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🐟 코이 스파 & 커피 (Koi spa & coffee)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🐟 Koi spa & coffee 錦鯉池庭園水療咖啡館</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">☕ 비단잉어가 헤엄치는 정원에서 커피 마시고 마사지 받는 힐링 코스.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">結合錦鯉魚池景觀的舒壓 SPA，做完按摩還能喝杯現萃咖啡放空。</div>
+            <a href="https://maps.google.com/?q=Koi+spa+%26+coffee+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 5. Coral Spa Hoi An -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Coral Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌺 코랄 스파 호이안 (Coral Spa Hoi An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌺 Coral Spa Hoi An 會安古鎮芳香精油按摩</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌿 90분 커플 아로마 에센셜 오일 마사지 & 친절한 케어.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安古鎮高評價 SPA，雙人芳香天然精油舒壓，解除旅途疲憊。</div>
+            <a href="https://maps.google.com/?q=Coral+Spa+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 6. Pandanus Spa Hoi An -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80" alt="Pandanus Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌿 판다누스 스파 (Pandanus Spa Hoi An)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌿 Pandanus Spa Hoi An 草本精油按摩＆特製優格</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🍶 정원 속 힐링 마사지 후 맛보는 수제 요거트 디저트.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安綠意庭園舒壓 SPA，按摩後享用名物手工自製優格甜品。</div>
+            <a href="https://maps.google.com/?q=Pandanus+Spa+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 7. Herbal Spa -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=600&q=80" alt="Herbal Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌿 허벌 스파 (Herbal Spa Da Nang)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌿 Herbal Spa 峴港經典草本熱石按摩</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🔥 90분 허브 핫스톤 마사지 & 전통 힐링 테라피.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">峴港超經典名店！草本熱石精油深層按摩，徹底舒緩全身肌肉。</div>
+            <a href="https://maps.google.com/?q=Herbal+Spa+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 8. Nguon Spa -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Nguon Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🎋 응온 스파 / 원 스파 (Nguon Spa)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🎋 Nguon Spa（源 Spa）竹林流水禪風芳療</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🎋 대나무숲流水 환경 속에서 즐기는 조용한 커플 테라피.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">充滿禪意的竹林與流水庭園造景，靜謐舒適的雙人精油 SPA。</div>
+            <a href="https://maps.google.com/?q=Nguon+Spa+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 9. Chua Spa - Massage -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80" alt="Chua Spa">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">💆‍♂️ 추아 스파 (Chua Spa - Massage)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">💆‍♂️ Chua Spa 峴港港口地道泰式與越式按摩</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 친절하고 시원한 압의 가성비 전신 마사지샵.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的在地舒壓按摩館，手法專業到位，性價比極高。</div>
+            <a href="https://maps.google.com/?q=Chua+Spa+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 6: 景點・購物・酒吧 ==================== -->
+  <div id="tab-spot" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">📸 핫플 명소 & 쇼핑 & 바 (20곳)</div>
+          <button class="header-badge" onclick="openAddModal('spot')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">打卡景點・樂天超市・選物店・微醺酒吧</div>
+      </div>
+      <div class="mobile-card-list" id="spot-list">
+        
+        <!-- 1. Midnight Condo -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=600&q=80" alt="Midnight Condo">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🍸 미드나잇 콘도 (Midnight Condo Bar)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🍸 Midnight Condo 峴港時髦微醺酒吧</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">붉은 조명과 힙한 음악, 시그니처 칵테일이 매력적인 감성 칵테일 바.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的超人氣隱密質感酒吧！紅光微醺氛圍與特調調酒，約會小酌首選。</div>
+            <a href="https://maps.google.com/?q=Midnight+Condo+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. CONTRAST PHOTO -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="CONTRAST PHOTO">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">📸 콘트라스트 포토 (CONTRAST PHOTO - Photobooth Vintage)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">📸 CONTRAST PHOTO 韓系復古拍貼機店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🧸 다양한 소품과 함께 다낭 여행 네컷사진 추억 남기기!</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單必拍拍貼機！提供各式可愛頭飾配件，拍下兩人的專屬四格照片。</div>
+            <a href="https://maps.google.com/?q=CONTRAST+PHOTO+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Hana 34 Vintage Jewelry -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80" alt="Hana 34">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">💍 하나 34 빈티지 주얼리 (Hana 34 Vintage Jewelry)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">💍 Hana 34 復古手工珠寶飾品選物店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 유니크한 빈티지 은반지, 목걸이, 수제 액세서리 쇼핑 명소.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">精緻又獨特的復古銀飾、戒指與手工項鍊，非常適合挑選紀念小禮物。</div>
+            <a href="https://maps.google.com/?q=Hana+34+Vintage+Jewelry+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 4. Caus Club - Thrift shop -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=600&q=80" alt="Caus Club">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">👗 카우스 클럽 빈티지샵 (Caus Club - Thrift shop)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">👗 Caus Club 古著二手潮流選品店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🕶️ 힙한 감성의 빈티지 의류, Y2K 패션 아이템 득템하기.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">美溪沙灘周邊年輕人最愛的古著服飾店，可淘到超棒的 Y2K 度假單品。</div>
+            <a href="https://maps.google.com/?q=Caus+Club+Thrift+shop+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 5. Magno Archive -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80" alt="Magno Archive">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">👗 마그노 아카이브 (Magno Archive - Thrift Store, Y2K)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">👗 Magno Archive Y2K 復古女性服飾店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 트렌디한 Y2K 스타일 의류와 빈티지 원피스 쇼핑.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的潮流女裝古著店，滿滿 Y2K 與海島度假風格洋裝配件。</div>
+            <a href="https://maps.google.com/?q=Magno+Archive+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 6. Maaji.Co -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Maaji.Co">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">👗 마지 코 (Maaji.Co)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">👗 Maaji.Co 美溪沙灘設計師服飾店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🛍️ 감각적인 휴양지 원피스, 린넨 의류 & 라이프스타일 패션.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的設計感服裝選品店，剪裁俐落的亞麻度假洋裝與時尚穿搭。</div>
+            <a href="https://maps.google.com/?q=Maaji.Co+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 7. Vani Shop -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1526178613552-2b45c6c302f0?auto=format&fit=crop&w=600&q=80" alt="Vani Shop">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🎁 바니 샵 (Vani Shop)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🎁 Vani Shop 峴港精品伴手禮＆雜貨選物店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 라탄백, 베트남 수제 기념품, 감성 소품이 가득한 기념품샵.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的質感紀念品店！編織藤編包、特色手工藝品與送禮小物。</div>
+            <a href="https://maps.google.com/?q=Vani+Shop+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 8. Salt & Sand -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Salt & Sand">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">👙 솔트 앤 샌드 (Salt & Sand - Swimwear)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">👙 Salt & Sand 海灘泳裝＆渡假風服飾店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌊 예쁜 수영복, 비치웨어, 휴양지 원피스 쇼핑하기 좋은 곳.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">海灘度假風泳裝與沙灘洋裝專賣店，拍照出片必備穿搭。</div>
+            <a href="https://maps.google.com/?q=Salt+%26+Sand+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 9. ORI Jewelry -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80" alt="ORI Jewelry">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">💍 오리 주얼리 (ORI Jewelry & Handmade Accessories)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">💍 ORI Jewelry 手工銀飾與配件選物店</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 수제 실버 반지, 팔찌, 감성 주얼리 쇼핑.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的手工首飾店，質感銀戒與手鍊，適合情侶紀念品。</div>
+            <a href="https://maps.google.com/?q=ORI+Jewelry+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 10. Lotte Mart Supermarket -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=600&q=80" alt="Lotte Mart">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🛒 롯데마트 다낭점 (Lotte Mart Supermarket)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🛒 Lotte Mart 樂天大型超市</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🥭 망고젤리, 아치카페, 견과류, 베트남 과자 원스톱 쇼핑!</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">峴港採買伴手禮最大超市！芒果乾、腰果、越南咖啡、零食一站買齊。</div>
+            <a href="https://maps.google.com/?q=Lotte+Mart+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 11. Chợ Hàn (漢市場) -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Cho Han">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🛍️ 한시장 (Chợ Hàn)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🛍️ 漢市場（Cho Han）傳統採買地標</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">👗 아오자이 맞춤, 라탄백, 건망고, 캐슈넛 전통 쇼핑 명소.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">市區最熱鬧傳統市場！訂製奧黛、編織包、芒果乾與果乾伴手禮。</div>
+            <a href="https://maps.google.com/?q=Cho+Han+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 12. 다낭 대성당 (핑크성당) -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80" alt="Pink Cathedral">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">⛪ 다낭 대성당 / 핑크성당 (Pink Church)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">⛪ 粉紅大教堂（峴港大教堂）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌸 핑크빛 고딕 양식 성당! 커플 인생샷 필수 코스.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">法式粉嫩哥德式教堂，峴港必拍打卡代表性建築。</div>
+            <a href="https://maps.google.com/?q=Da+Nang+Cathedral" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 13. 용다리 (Dragon Bridge) -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=600&q=80" alt="Dragon Bridge">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🐉 용다리 불쇼 (Dragon Bridge)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🐉 龍橋噴火秀（Dragon Bridge）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🔥 주말 밤 9시 황금빛 용이 내뿜는 화려한 불쇼와 물쇼!</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">峴港地標大橋，週末 21:00 準時上演震撼噴火與噴水秀。</div>
+            <a href="https://maps.google.com/?q=Dragon+Bridge+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 14. Linh Ung Pagoda -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600&q=80" alt="Linh Ung">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🏯 링엄사 / 영흥사 (Linh Ung Pagoda)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🏯 靈應寺（山茶半島白玉觀音像）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌊 67미터 거대 해수관음상과 다낭 바다가 한눈에 내려다보이는 사원.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">高達 67 公尺的東南亞最高白玉觀音像，俯瞰整片蔚藍峴港海岸線。</div>
+            <a href="https://maps.google.com/?q=Linh+Ung+Pagoda+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 15. My Khe Beach -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="My Khe Beach">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌊 미케 비치 (My Khe Beach)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌊 美溪沙灘（世界六大最美沙灘之一）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌅 새벽 5시 핑크빛 일출과 고운 백사장이 매력적인 힐링 해변.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">細白沙灘與蔚藍海岸，清晨五點看日出與散步的最美沙灘。</div>
+            <a href="https://maps.google.com/?q=My+Khe+Beach+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 16. An Bang Beach -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="An Bang Beach">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🏖️ 안방 비치 (An Bang Beach)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🏖️ 安邦海灘（會安度假放空海岸）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌊 시원한 바다를 바라보며 선베드에서 즐기는 여유로운 휴양.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安最愜意的海岸，躺在沙灘椅上吹海風、喝椰子水看日落。</div>
+            <a href="https://maps.google.com/?q=An+Bang+Beach+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 17. East Sea Park -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="East Sea Park">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🕊️ 동해 공원 (East Sea Park)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🕊️ 東海公園（美溪海灘鴿子廣場）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🕊️ 비둘기 떼와 바다가 어우러진 산책하기 좋은 해변 공원.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">美溪沙灘旁的標誌性綠地廣場，清晨有成群和平鴿與海濱散步步道。</div>
+            <a href="https://maps.google.com/?q=East+Sea+Park+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 18. Breeze Basket Boat -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Basket boat">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥥 바구니배 체험 (Breeze Restaurant & Basket Boat)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥥 迦南島椰林桶船體驗（Breeze Basket Boat）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌊 코코넛 숲을 가르는 신나는 바구니배 스핀 쇼와 전통 체험.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的會安桶船體驗，穿梭椰林水道欣賞精采旋轉特技。</div>
+            <a href="https://maps.google.com/?q=Breeze+Restaurant+%26+Basket+Boat+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 19. Tượng Cá Chép Hóa Rồng -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=600&q=80" alt="Carp Dragon">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">⛲ 잉어용 동상 (Tượng Cá Chép Hóa Rồng)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">⛲ 鯉魚化龍像（韓江畔噴水地標）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">✨ 한강 사랑의 부교 옆, 밤에 화려하게 빛나는 다낭의 사자상.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">峴港版的魚尾獅！韓江情人橋旁夜景噴水打卡點。</div>
+            <a href="https://maps.google.com/?q=Tuong+Ca+Chep+Hoa+Rong+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 20. Đà Nẵng fishingfeel -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80" alt="Fishingfeel">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🎣 피싱필 낚시투어 (Đà Nẵng fishingfeel)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🎣 Đà Nẵng Fishingfeel 海釣休閒體驗</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌊 다낭 바다에서 즐기는 이색 보트 낚시 & 해양 액티비티.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">清單標記的峴港特色出海海釣體驗行程。</div>
+            <a href="https://maps.google.com/?q=Da+Nang+fishingfeel" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 📱 底部 App 固定導覽列 (6 大分類) -->
+<div class="app-tabbar">
+  <button class="tabbar-item active" onclick="switchAppTab('tab-itinerary', this)">
+    <span class="tabbar-icon">📅</span>
+    <span>일정 (行程)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-traffic', this)">
+    <span class="tabbar-icon">🚗</span>
+    <span>교통 (交通)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-cafe', this)">
+    <span class="tabbar-icon">☕</span>
+    <span>카페 (咖啡)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-food', this)">
+    <span class="tabbar-icon">🦞</span>
+    <span>맛집 (美食)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-spa', this)">
+    <span class="tabbar-icon">💆‍♀️</span>
+    <span>스파 (按摩)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-spot', this)">
+    <span class="tabbar-icon">📸</span>
+    <span>명소 (景點)</span>
+  </button>
+</div>
+
+<!-- 新增彈窗 Sheet -->
+<div id="addModal" class="modal-overlay">
+  <div class="modal-sheet">
+    <div class="modal-title" id="modalTitle">➕ 새로운 장소 추가</div>
+    <div class="form-group">
+      <label>장소 이름 (店名 - 韓文或英文) *</label>
+      <input type="text" id="inputNameKo" placeholder="예: Little Faifo Cafe" oninput="autoTranslateModalField('inputNameKo', 'inputNameZh', 'ko', 'zh')">
+    </div>
+    <div class="form-group">
+      <label>店名 (中文店名 - 支援自動翻譯) *</label>
+      <input type="text" id="inputNameZh" placeholder="例如：小會安咖啡館" oninput="autoTranslateModalField('inputNameZh', 'inputNameKo', 'zh', 'ko')">
+    </div>
+    <div class="form-group">
+      <label>한국어 설명 (韓文描述 - 自動翻譯)</label>
+      <input type="text" id="inputDescKo" placeholder="예: 루프탑 뷰가 예쁜 카페" oninput="autoTranslateModalField('inputDescKo', 'inputDescZh', 'ko', 'zh')">
+    </div>
+    <div class="form-group">
+      <label>中文 說明 (中文備忘 - 自動翻譯)</label>
+      <input type="text" id="inputDescZh" placeholder="例如：超好拍的頂樓海景下午茶" oninput="autoTranslateModalField('inputDescZh', 'inputDescKo', 'zh', 'ko')">
+    </div>
+    <div class="form-group">
+      <label>Google 지도 URL (地圖連結)</label>
+      <input type="text" id="inputLink" placeholder="https://maps.google.com/...">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddModal()">취소 (取消)</button>
+      <button class="btn-submit" onclick="submitNewPlace()">추가하기 (確認新增)</button>
+    </div>
+  </div>
+</div>
+
+<div id="saveToast" class="save-toast">✨ 동기화 완료! (已同步更新)</div>
+
+<script>
+  let currentModalType = 'cafe';
+  const STORAGE_KEY = 'couple_sync_travel_planner_v31_complete';
+  
+  // 自動從 URL 讀取 ?room= 房間代碼
+  const urlParams = new URLSearchParams(window.location.search);
+  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG_2026_MASTER_V31';
+  currentRoomId = currentRoomId.trim().toUpperCase();
+  localStorage.setItem('couple_trip_room_id', currentRoomId);
+
+  // ==================== ☁️ Firebase 資料庫即時連線 ====================
+  const firebaseConfig = {
+    databaseURL: "https://dana-trip-dd568-default-rtdb.firebaseio.com"
+  };
+  
+  let dbRef = null;
+  let isReceivingCloudData = false;
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    initFirebaseSync();
+  } catch (e) {
+    console.warn("Firebase fallback:", e);
+  }
+
+  function initFirebaseSync() {
+    dbRef = firebase.database().ref("trips/" + currentRoomId);
+    
+    dbRef.on('value', (snapshot) => {
+      const cloudData = snapshot.val();
+      if (cloudData && !isReceivingCloudData) {
+        isReceivingCloudData = true;
+        renderDataToDOM(cloudData);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudData));
+        showToast('☁️ 상대방의 변경사항이 실시간 동기화되었습니다! (已即時同步更新！)');
+        document.getElementById('syncDot').className = 'sync-dot';
+        setTimeout(() => { isReceivingCloudData = false; }, 300);
+      }
+    }, (err) => {
+      console.warn("Cloud status:", err);
+      document.getElementById('syncDot').className = 'sync-dot offline';
+    });
+  }
+
+  function pushToCloud(data) {
+    if (dbRef && !isReceivingCloudData) {
+      document.getElementById('syncDot').className = 'sync-dot syncing';
+      dbRef.set(data).then(() => {
+        document.getElementById('syncDot').className = 'sync-dot';
+      }).catch((e) => {
+        document.getElementById('syncDot').className = 'sync-dot offline';
+      });
+    }
+  }
+
+  function copyShareableLink() {
+    const baseUrl = "https://miggo1999-dot.github.io/Danang-trip/";
+    const shareableUrl = baseUrl + '?room=' + currentRoomId;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareableUrl).then(() => {
+        showToast('🔗 전용 공유 링크가 복사되었습니다! (專屬網址已複製！)');
+        alert('專屬同步網址已複製到剪貼簿！\n\n將網址傳給女朋友，雙方手機即可 100% 即時雙向同步：\n' + shareableUrl);
+      });
+    } else {
+      prompt('請複製下方專屬連線網址傳給女朋友：', shareableUrl);
+    }
+  }
+
+  function forceResetToLatestPlan() {
+    if (confirm("確定要將網頁上的最新完整地點與航班重設並同步至雲端嗎？")) {
+      localStorage.removeItem(STORAGE_KEY);
+      saveAndSync(true);
+      showToast("🔄 最新完整行程已成功同步至雲端！");
+    }
+  }
+
+  function renderDataToDOM(data) {
+    if (!data) return;
+    if (data.headerEmoji) document.getElementById('headerEmoji').innerHTML = data.headerEmoji;
+    if (data.headerBadge) document.getElementById('headerBadge').innerHTML = data.headerBadge;
+    if (data.headerTitle) document.getElementById('headerTitle').innerHTML = data.headerTitle;
+    if (data.headerSubtitle) document.getElementById('headerSubtitle').innerHTML = data.headerSubtitle;
+    if (data.itinerary) document.getElementById('itinerary-content').innerHTML = data.itinerary;
+    if (data.traffic) document.getElementById('traffic-list').innerHTML = data.traffic;
+    if (data.cafeList) document.getElementById('cafe-list').innerHTML = data.cafeList;
+    if (data.foodList) document.getElementById('food-list').innerHTML = data.foodList;
+    if (data.spaList && document.getElementById('spa-list')) document.getElementById('spa-list').innerHTML = data.spaList;
+    if (data.spotList && document.getElementById('spot-list')) document.getElementById('spot-list').innerHTML = data.spotList;
+    if (data.primaryColor) setCustomPrimaryColor(data.primaryColor);
+    attachInputListeners();
+  }
+
+  function collectDOMData() {
+    return {
+      headerEmoji: document.getElementById('headerEmoji').innerHTML,
+      headerBadge: document.getElementById('headerBadge').innerHTML,
+      headerTitle: document.getElementById('headerTitle').innerHTML,
+      headerSubtitle: document.getElementById('headerSubtitle').innerHTML,
+      itinerary: document.getElementById('itinerary-content').innerHTML,
+      traffic: document.getElementById('traffic-list').innerHTML,
+      cafeList: document.getElementById('cafe-list').innerHTML,
+      foodList: document.getElementById('food-list').innerHTML,
+      spaList: document.getElementById('spa-list') ? document.getElementById('spa-list').innerHTML : '',
+      spotList: document.getElementById('spot-list') ? document.getElementById('spot-list').innerHTML : '',
+      lastUpdated: Date.now()
+    };
+  }
+
+  // ==================== ⚡ 全域即時雙向翻譯引擎 ====================
+  let translateTimer = null;
+  let isTranslating = false;
+
+  async function translateTextOnline(text, fromLang, toLang) {
+    if (!text || text.trim() === '') return '';
+    try {
+      const src = fromLang === 'zh' ? 'zh-TW' : 'ko';
+      const tgt = toLang === 'zh' ? 'zh-TW' : 'ko';
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data && data.responseData && data.responseData.translatedText) {
+        const txt = document.createElement('textarea');
+        txt.innerHTML = data.responseData.translatedText;
+        return txt.value;
+      }
+    } catch (e) {
+      console.warn('線上翻譯暫時繁忙:', e);
+    }
+    return null;
+  }
+
+  function handleLiveTranslateInput(e) {
+    if (isTranslating || isReceivingCloudData) return;
+    const target = e.target;
+    clearTimeout(translateTimer);
+
+    translateTimer = setTimeout(async () => {
+      if (target.classList.contains('trans-src-ko')) {
+        let parent = target.closest('.item') || target.closest('.mobile-card-header') || target.closest('.place-body-m') || target.closest('.hotel-stay-info') || target.closest('header');
+        if (parent) {
+          const zhEl = parent.querySelector('.trans-src-zh');
+          if (zhEl) {
+            const rawText = target.innerText.trim();
+            if (rawText) {
+              const trans = await translateTextOnline(rawText, 'ko', 'zh');
+              if (trans) {
+                isTranslating = true;
+                zhEl.innerText = trans;
+                isTranslating = false;
+                showToast('✨ 韓文已同步翻譯成中文！');
+              }
+            }
+          }
+        }
+      } else if (target.classList.contains('trans-src-zh')) {
+        let parent = target.closest('.item') || target.closest('.mobile-card-header') || target.closest('.place-body-m') || target.closest('.hotel-stay-info') || target.closest('header');
+        if (parent) {
+          const koEl = parent.querySelector('.trans-src-ko');
+          if (koEl) {
+            const rawText = target.innerText.trim();
+            if (rawText) {
+              const trans = await translateTextOnline(rawText, 'zh', 'ko');
+              if (trans) {
+                isTranslating = true;
+                koEl.innerText = trans;
+                isTranslating = false;
+                showToast('✨ 中文已同步翻譯成韓文！');
+              }
+            }
+          }
+        }
+      }
+      saveAndSync();
+    }, 1200);
+  }
+
+  let modalFieldTimer = null;
+  function autoTranslateModalField(srcId, targetId, fromLang, toLang) {
+    clearTimeout(modalFieldTimer);
+    modalFieldTimer = setTimeout(async () => {
+      const srcVal = document.getElementById(srcId).value.trim();
+      if (srcVal) {
+        const trans = await translateTextOnline(srcVal, fromLang, toLang);
+        if (trans) document.getElementById(targetId).value = trans;
+      }
+    }, 1000);
+  }
+
+  function saveAndSync(manual = false) {
+    const data = collectDOMData();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    pushToCloud(data);
+    if (manual) showToast('☁️ 클라우드 동기화 완료! (已同步至雲端)');
+  }
+
+  // 主題色庫
+  const THEMES = {
+    dorami: { primary: '#9B72CF', light: '#EBDFF7', pastel: '#F3ECFA', dark: '#583D72', border: '#D8C7EB', badge: '#D85A7F', bg: '#F7F3FB', emoji: '🎀 🐷 🌸 🥭', badgeText: "Dorami & Piggy's Lavender Paradise 💜" },
+    miffy: { primary: '#8A6BA8', light: '#E7DCF5', pastel: '#F1E9FA', dark: '#4D3663', border: '#D5C4EB', badge: '#9D84B7', bg: '#FAF6FD', emoji: '🐰 🌷 🌸 🎀', badgeText: "Miffy's Soft Lavender Dream 💜" },
+    sakura: { primary: '#FF8BA7', light: '#FFDCE5', pastel: '#FFF0F3', dark: '#6E2C3D', border: '#FFCCD5', badge: '#E05780', bg: '#FFFDF9', emoji: '🌸 🍓 🎀 🧸', badgeText: "Sakura Peach Sweet Romance 💕" },
+    matcha: { primary: '#52966B', light: '#D3ECD9', pastel: '#EAF7ED', dark: '#274B34', border: '#BFE3C8', badge: '#D68945', bg: '#F6FBF7', emoji: '🍵 🌿 🍃 🍡', badgeText: "Matcha Cream Healing Trip 🌿" },
+    ocean: { primary: '#3A86C8', light: '#D2E8FA', pastel: '#EBF4FC', dark: '#1C4263', border: '#B8DBF7', badge: '#E76F51', bg: '#F4FAFF', emoji: '🌊 🐬 🐚 🌴', badgeText: "Ocean Blue Island Vacation 🌊" }
+  };
+
+  function applyPresetTheme(themeKey) {
+    document.querySelectorAll('.theme-pill-btn').forEach(btn => btn.classList.remove('active'));
+    if (window.event && window.event.currentTarget) {
+      window.event.currentTarget.classList.add('active');
+    }
+
+    const t = THEMES[themeKey];
+    if (t) {
+      const root = document.documentElement;
+      root.style.setProperty('--lavender-primary', t.primary);
+      root.style.setProperty('--lavender-light', t.light);
+      root.style.setProperty('--lavender-pastel', t.pastel);
+      root.style.setProperty('--lavender-dark', t.dark);
+      root.style.setProperty('--lavender-border', t.border);
+      root.style.setProperty('--accent-badge', t.badge);
+      root.style.setProperty('--bg-lavender', t.bg);
+      if (t.emoji) document.getElementById('headerEmoji').textContent = t.emoji;
+      if (t.badgeText) document.getElementById('headerBadge').textContent = t.badgeText;
+      saveAndSync(false);
+    }
+  }
+
+  function setCustomPrimaryColor(colorHex) {
+    const root = document.documentElement;
+    root.style.setProperty('--lavender-primary', colorHex);
+    root.style.setProperty('--lavender-border', colorHex + '55');
+    root.style.setProperty('--lavender-pastel', colorHex + '18');
+    root.style.setProperty('--lavender-light', colorHex + '33');
+  }
+
+  function switchAppTab(tabId, btn) {
+    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tabbar-item').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function switchDaySub(dayId, btn) {
+    document.querySelectorAll('.day-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.day-tab-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(dayId);
+    if (target) target.style.display = 'block';
+    if (btn) btn.classList.add('active');
+  }
+
+  function setLangMode(mode) {
+    document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+    if (window.event && window.event.currentTarget) {
+      window.event.currentTarget.classList.add('active');
+    }
+
+    const transElements = document.querySelectorAll('.trans-src-zh');
+    const contentElements = document.querySelectorAll('.trans-src-ko');
+
+    if (mode === 'both') {
+      transElements.forEach(el => el.style.display = 'block');
+      contentElements.forEach(el => el.style.display = 'block');
+    } else if (mode === 'ko') {
+      transElements.forEach(el => el.style.display = 'none');
+      contentElements.forEach(el => el.style.display = 'block');
+    } else if (mode === 'zh') {
+      transElements.forEach(el => el.style.display = 'block');
+      contentElements.forEach(el => el.style.display = 'none');
+    }
+  }
+
+  function deleteItem(btn) {
+    if (confirm('이 일정을 삭제하시겠습니까? (確定刪除此行程？)')) {
+      btn.closest('.item').remove();
+      saveAndSync();
+    }
+  }
+
+  function addNewItem(dayId) {
+    const timeline = document.querySelector('#' + dayId + ' .timeline');
+    const newItem = document.createElement('div');
+    newItem.className = 'item';
+    newItem.innerHTML = `
+      <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+      <span class="item-time" contenteditable="true">15:00 – 16:30</span>
+      <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">새 일정</span> 새로운 일정을 입력해주세요...</div>
+      <div class="item-trans trans-src-zh" contenteditable="true">請輸入中文翻譯或備忘...</div>
+    `;
+    timeline.appendChild(newItem);
+    attachInputListeners();
+    saveAndSync();
+  }
+
+  function openAddModal(type) {
+    currentModalType = type;
+    const titles = {
+      cafe: '☕ 새로운 카페/디저트 추가 (新增咖啡廳/甜點)',
+      food: '🦞 새로운 맛집 추가 (新增美食餐廳)',
+      spa: '💆‍♀️ 새로운 스파 추가 (新增按摩SPA)',
+      spot: '📸 새로운 명소/쇼핑 추가 (新增景點/選物店)'
+    };
+    document.getElementById('modalTitle').textContent = titles[type] || '➕ 새로운 장소 추가';
+    document.getElementById('inputNameKo').value = '';
+    document.getElementById('inputNameZh').value = '';
+    document.getElementById('inputDescKo').value = '';
+    document.getElementById('inputDescZh').value = '';
+    document.getElementById('inputLink').value = '';
+    document.getElementById('addModal').classList.add('active');
+  }
+
+  function closeAddModal() {
+    document.getElementById('addModal').classList.remove('active');
+  }
+
+  function submitNewPlace() {
+    const nameKo = document.getElementById('inputNameKo').value.trim() || document.getElementById('inputNameZh').value.trim();
+    const nameZh = document.getElementById('inputNameZh').value.trim() || nameKo;
+    if (!nameKo) { alert('장소 이름을 입력해주세요! (請輸入店名)'); return; }
+    
+    if (!confirm(`確定要新增「${nameZh} (${nameKo})」嗎？`)) return;
+
+    const descKo = document.getElementById('inputDescKo').value.trim() || '추천 장소';
+    const descZh = document.getElementById('inputDescZh').value.trim() || '自訂精選推薦地點';
+    
+    const defaultImgs = {
+      cafe: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80',
+      food: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80',
+      spa: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
+      spot: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=600&q=80'
+    };
+    const img = defaultImgs[currentModalType] || defaultImgs.cafe;
+    const link = document.getElementById('inputLink').value.trim() || `https://maps.google.com/?q=${encodeURIComponent(nameKo + ' Da Nang')}`;
+
+    const icons = { cafe: '☕', food: '🍴', spa: '💆‍♀️', spot: '📸' };
+    const icon = icons[currentModalType] || '📍';
+
+    const newCard = document.createElement('div');
+    newCard.className = 'place-card-m';
+    newCard.innerHTML = `
+      <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+      <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+      <img class="place-img-m" src="${img}" alt="${nameKo}">
+      <div class="place-body-m">
+        <div class="place-title-ko trans-src-ko" contenteditable="true">${icon} ${nameKo}</div>
+        <div class="place-title-zh trans-src-zh" contenteditable="true">${icon} ${nameZh}</div>
+        <div class="place-desc-ko trans-src-ko" contenteditable="true">${descKo}</div>
+        <div class="place-desc-zh trans-src-zh" contenteditable="true">${descZh}</div>
+        <a href="${link}" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+      </div>
+    `;
+
+    const listIds = { cafe: 'cafe-list', food: 'food-list', spa: 'spa-list', spot: 'spot-list' };
+    const targetList = document.getElementById(listIds[currentModalType]);
+    if (targetList) targetList.insertBefore(newCard, targetList.firstChild);
+
+    attachInputListeners();
+    closeAddModal();
+    saveAndSync();
+  }
+
+  function deletePlaceCard(btn) {
+    if (confirm('이 장소를 삭제하시겠습니까? (確定刪除此地點卡片？)')) {
+      btn.closest('.place-card-m').remove();
+      saveAndSync();
+    }
+  }
+
+  // ==================== 📷 輕鬆更換圖片功能 ====================
+  const PHOTO_PRESETS = [
+    { name: "🌊 美溪海灘 (My Khe Beach)", url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏮 會安古鎮 (Hoi An Town)", url: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏰 巴拿山佛手橋 (Ba Na Hills)", url: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏖️ 安邦海灘度假 (An Bang Beach)", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" },
+    { name: "🍧 芒果雪花冰 (Mango Bingsu)", url: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" },
+    { name: "🥞 早午餐 (Brunch Cafe)", url: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80" },
+    { name: "🍨 義式冰淇淋 (Gelato Ice Cream)", url: "https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=800&q=80" },
+    { name: "🦞 米其林海鮮 (Seafood Gourmet)", url: "https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=800&q=80" },
+    { name: "💆‍♀️ 精油芳療 (Relaxing Spa)", url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" },
+    { name: "🍸 微醺酒吧 (Cocktail Bar)", url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80" },
+    { name: "🌉 峴港漢江夜景 (Han River Night)", url: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" }
+  ];
+
+  function changeBannerImage(btn) {
+    const banner = btn.closest('.mobile-banner');
+    const imgEl = banner.querySelector('img');
+    
+    let optionsText = "請選擇預設美圖編號 (1~11) 或直接貼上圖片網址 (URL):\n\n";
+    PHOTO_PRESETS.forEach((p, idx) => {
+      optionsText += `${idx + 1}. ${p.name}\n`;
+    });
+
+    const choice = prompt(optionsText + "\n請輸入 1~11 或貼上圖片網址：", "1");
+    if (!choice) return;
+
+    if (!confirm("確定要更換此張橫幅封面照片嗎？")) return;
+
+    const num = parseInt(choice.trim());
+    if (num >= 1 && num <= PHOTO_PRESETS.length) {
+      imgEl.src = PHOTO_PRESETS[num - 1].url;
+    } else if (choice.startsWith("http")) {
+      imgEl.src = choice.trim();
+    } else {
+      alert("請輸入有效的編號 (1~11) 或完整圖片網址 (http...)！");
+      return;
+    }
+
+    saveAndSync();
+    showToast("📷 사진이 변경되었습니다! (照片已更新)");
+  }
+
+  function changeCardImage(btn) {
+    const card = btn.closest('.place-card-m');
+    const imgEl = card.querySelector('.place-img-m');
+    const newUrl = prompt("請貼上新的圖片網址 (URL)：\n새 이미지 URL을 입력하세요:", imgEl.src);
+    if (newUrl && newUrl.trim() !== '') {
+      if (confirm("確定要更換此地點的照片嗎？")) {
+        imgEl.src = newUrl.trim();
+        saveAndSync();
+        showToast("📷 사진이 변경되었습니다! (照片已更新)");
+      }
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('saveToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function attachInputListeners() {
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.removeEventListener('input', handleLiveTranslateInput);
+      el.addEventListener('input', handleLiveTranslateInput);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        renderDataToDOM(parsed);
+      } catch (e) { console.error(e); }
+    }
+    attachInputListeners();
+  });
+</script>
+
+</body>
+</html>      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Gaegu', 'M PLUS Rounded 1c', 'Noto Sans KR', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-lavender);
+      background-image: radial-gradient(var(--lavender-light) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+      color: var(--text-dark);
+      line-height: 1.5;
+      padding: 12px 10px calc(85px + var(--safe-bottom));
+      user-select: auto;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 雲端即時連線狀態列 */
+    .sync-status-bar {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      border-radius: 18px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(155, 114, 207, 0.08);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--lavender-dark);
+      gap: 6px;
+    }
+
+    .sync-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sync-dot {
+      width: 9px;
+      height: 9px;
+      background: #59CD90;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    .sync-dot.offline { background: #FFB3BA; }
+    .sync-dot.syncing { background: #FFD166; }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
+    }
+
+    .sync-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .share-link-btn {
+      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .reset-plan-btn {
+      background: var(--lavender-pastel);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
     /* 航班資訊快捷卡片 */
     .flight-info-card {
       background: #FFFFFF;
