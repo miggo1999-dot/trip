@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="다낭慢活手冊">
+  <title>🎀 다낭·호이안 커플 실시간 양방향 번역 플래너 🐷</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <style>
+    :root {
+      --bg-lavender: #F7F3FB;
+      --card-bg: #FFFFFF;
+      --lavender-primary: #9B72CF;
+      --lavender-light: #EBDFF7;
+      --lavender-pastel: #F3ECFA;
+      --lavender-dark: #583D72;
+      --lavender-border: #D8C7EB;
+      --accent-badge: #D85A7F;
+      --text-dark: #382E47;
+      --text-muted: #6B5B7E;
+      --tag-spa: #E8D7F1;
+      --tag-food: #FFE5D9;
+      --tag-cafe: #D8F3DC;
+      --tag-spot: #DCEAFE;
+      --safe-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Gaegu', 'M PLUS Rounded 1c', 'Noto Sans KR', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-lavender);
+      background-image: radial-gradient(var(--lavender-light) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+      color: var(--text-dark);
+      line-height: 1.5;
+      padding: 12px 10px calc(85px + var(--safe-bottom));
+      user-select: auto;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 雲端即時同步與專屬網址分享列 */
+    .sync-status-bar {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      border-radius: 18px;
+      padding: 8px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(155, 114, 207, 0.08);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--lavender-dark);
+    }
+
+    .sync-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sync-dot {
+      width: 9px;
+      height: 9px;
+      background: #59CD90;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    .sync-dot.offline { background: #FFB3BA; }
+    .sync-dot.syncing { background: #FFD166; }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
+    }
+
+    .share-link-btn {
+      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 全局即時翻譯雙語提示卡片 */
+    .all-trans-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-border);
+      border-radius: 16px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.05);
+      text-align: center;
+    }
+    .all-trans-ko {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .all-trans-zh {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #7B6894;
+      margin-top: 2px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 18px 14px 14px;
+      background: linear-gradient(145deg, #FFFFFF 0%, var(--lavender-pastel) 60%, var(--lavender-light) 100%);
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(155, 114, 207, 0.12);
+      margin-bottom: 12px;
+      border: 2.5px solid var(--lavender-border);
+      position: relative;
+    }
+
+    .theme-emoji-badge {
+      font-size: 1.8rem;
+      margin-bottom: 2px;
+      outline: none;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 16px;
+      margin-bottom: 6px;
+      outline: none;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--lavender-dark);
+      margin-bottom: 2px;
+      font-weight: 800;
+      outline: none;
+      word-break: break-word;
+    }
+
+    header p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      outline: none;
+    }
+
+    /* 語言切換膠囊 */
+    .lang-capsules {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .lang-pill {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-pill.active {
+      background: var(--lavender-primary);
+      color: white;
+    }
+
+    /* 主題膠囊欄 */
+    .theme-scroll-bar {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      padding: 4px 2px 10px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .theme-scroll-bar::-webkit-scrollbar { display: none; }
+
+    .theme-pill-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-border);
+      color: var(--text-dark);
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .theme-pill-btn.active {
+      background: var(--lavender-primary);
+      color: #fff;
+      border-color: var(--lavender-primary);
+    }
+
+    /* 每日分頁滑動 */
+    .day-scroll-nav {
+      display: flex;
+      overflow-x: auto;
+      gap: 6px;
+      padding: 4px 2px 12px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .day-scroll-nav::-webkit-scrollbar { display: none; }
+
+    .day-tab-btn {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .day-tab-btn.active {
+      background: var(--accent-badge);
+      color: white;
+      border-color: var(--accent-badge);
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(216, 90, 127, 0.25);
+    }
+
+    /* 頁面切換 */
+    .page-view {
+      display: none;
+    }
+    .page-view.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 卡片與內容 */
+    .mobile-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 16px 14px;
+      border: 2px solid var(--lavender-border);
+      box-shadow: 0 4px 18px rgba(155, 114, 207, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .mobile-card-header {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 2px dashed var(--lavender-light);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+
+    .header-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-card-title-ko {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      outline: none;
+    }
+
+    .mobile-card-title-zh {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      outline: none;
+    }
+
+    .mobile-card-badge {
+      font-size: 0.8rem;
+      background: var(--lavender-pastel);
+      color: var(--lavender-dark);
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    /* 🖼️ 照片容器與完全防遮擋按鈕 */
+    .mobile-banner {
+      width: 100%;
+      height: 165px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      position: relative;
+      background-color: var(--lavender-light);
+      border: 1.5px solid var(--lavender-border);
+    }
+    .mobile-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 換照片按鈕：高層級、半透明毛玻璃、絕不遮擋 */
+    .banner-edit-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 50;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: auto;
+    }
+    .banner-edit-btn:active {
+      transform: scale(0.96);
+    }
+
+    .place-img-edit-btn {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      pointer-events: auto;
+    }
+    .place-img-edit-btn:active {
+      transform: scale(0.96);
+    }
+
+    .banner-caption {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(56, 46, 71, 0.78);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 10px;
+      backdrop-filter: blur(4px);
+      z-index: 10;
+    }
+
+    /* 時間軸項目 */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 10px;
+      bottom: 10px;
+      width: 2.5px;
+      background: var(--lavender-light);
+      border-radius: 2px;
+    }
+
+    .item {
+      position: relative;
+      margin-bottom: 16px;
+      padding-right: 28px;
+    }
+    .item::before {
+      content: '🌸';
+      position: absolute;
+      left: -20px;
+      top: 1px;
+      font-size: 0.85rem;
+    }
+
+    .item-del-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: transparent;
+      border: none;
+      color: #C0AFD6;
+      font-size: 1.1rem;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .item-time {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--lavender-primary);
+      margin-bottom: 2px;
+      display: inline-block;
+      outline: none;
+    }
+
+    .item-content {
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      padding: 2px 0;
+      border-radius: 4px;
+      word-break: break-word;
+    }
+
+    .item-trans {
+      font-size: 0.86rem;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-top: 4px;
+      display: block;
+      border-left: 3px solid var(--lavender-primary);
+      outline: none;
+      word-break: break-word;
+    }
+
+    [contenteditable="true"]:focus {
+      background: #FFFDF0 !important;
+      box-shadow: 0 0 0 2px var(--lavender-primary);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .tag-food { background-color: var(--tag-food); color: #8A4B20; }
+    .tag-cafe { background-color: var(--tag-cafe); color: #1E6B7B; }
+    .tag-spa { background-color: var(--tag-spa); color: #6D3D8E; }
+    .tag-spot { background-color: var(--tag-spot); color: #215494; }
+
+    .mobile-add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      background: var(--bg-lavender);
+      border: 1.5px dashed var(--lavender-primary);
+      border-radius: 16px;
+      color: var(--lavender-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 10px;
+    }
+
+    /* 手機版卡片 */
+    .mobile-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .place-card-m {
+      background: #FFFFFF;
+      border-radius: 18px;
+      border: 2px solid var(--lavender-border);
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(155, 114, 207, 0.06);
+      position: relative;
+    }
+
+    .place-img-m {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      background: var(--lavender-light);
+      display: block;
+    }
+
+    .place-body-m {
+      padding: 12px;
+    }
+
+    .place-title-ko {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      margin-bottom: 2px;
+      outline: none;
+    }
+
+    .place-title-zh {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #7B6894;
+      margin-bottom: 4px;
+      outline: none;
+    }
+
+    .place-desc-ko {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #4A3B5E;
+      margin-bottom: 4px;
+      outline: none;
+      word-break: break-word;
+    }
+
+    .place-desc-zh {
+      font-size: 0.82rem;
+      color: #7B6894;
+      background: var(--lavender-pastel);
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      outline: none;
+      word-break: break-word;
+    }
+
+    .place-link-m {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--lavender-pastel);
+      border: 1.5px solid var(--lavender-primary);
+      color: var(--lavender-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    /* 底部導覽列 */
+    .app-tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1.5px solid var(--lavender-border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 4px calc(8px + var(--safe-bottom));
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+    }
+
+    .tabbar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      flex: 1;
+      padding: 4px 0;
+      transition: all 0.2s;
+    }
+
+    .tabbar-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .tabbar-item.active {
+      color: var(--lavender-primary);
+      transform: translateY(-2px);
+    }
+
+    /* 彈窗 Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(56, 46, 71, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-sheet {
+      background: #FFFFFF;
+      border-radius: 28px 28px 0 0;
+      border-top: 3px solid var(--lavender-border);
+      width: 100%;
+      max-width: 600px;
+      padding: 20px 18px calc(20px + var(--safe-bottom));
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
+      animation: slideUp 0.25s ease;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .form-group { margin-bottom: 10px; }
+    .form-group label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--lavender-dark);
+      margin-bottom: 3px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--lavender-border);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .modal-btns button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+    }
+    .btn-submit { background: var(--lavender-primary); color: white; }
+    .btn-cancel { background: var(--lavender-pastel); color: var(--lavender-dark); }
+
+    /* 輕量儲存/同步氣泡 */
+    .save-toast {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-30px);
+      background: var(--lavender-dark);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 3000;
+      pointer-events: none;
+    }
+    .save-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 0.96;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ☁️ 雲端即時同步與專屬網址分享列 -->
+  <div class="sync-status-bar">
+    <div class="sync-indicator">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncStatusText">실시간 클라우드 동기화 (雲端即時連線)</span>
+    </div>
+    <button class="share-link-btn" onclick="copyShareableLink()">
+      <span>🔗</span>
+      <span>공유 링크 복사 (複製網址)</span>
+    </button>
+  </div>
+
+  <!-- 全區雙向即時翻譯雙語提示卡片 -->
+  <div class="all-trans-card">
+    <div class="all-trans-ko">
+      <span>⚡</span>
+      <span>전 구역 실시간 양방향 번역 활성화 (중국어 ⇄ 한국어)</span>
+    </div>
+    <div class="all-trans-zh">
+      <span>全區雙向即時翻譯已啟用 (改中文自動翻韓文・改韓文自動翻中文)</span>
+    </div>
+  </div>
+
+  <!-- 🎨 主題切換 (橫向滑動) -->
+  <div class="theme-scroll-bar">
+    <button class="theme-pill-btn active" onclick="applyPresetTheme('dorami')">🎀 哆啦美&小豬</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('miffy')">🐰 米飛夢幻淡紫</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('sakura')">🌸 浪漫櫻花粉</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('matcha')">🍵 森林抹茶綠</button>
+    <button class="theme-pill-btn" onclick="applyPresetTheme('ocean')">🌊 蔚藍海岸</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="theme-emoji-badge" id="headerEmoji" contenteditable="true">🎀 🐷 🌸 🍰</div>
+    <div><span class="header-badge" id="headerBadge" contenteditable="true">Dorami & Piggy's Lavender Paradise 💜</span></div>
+    <h1 id="headerTitle" class="trans-src-ko" contenteditable="true">도라미 & 피기 다낭·호이안 8박7일</h1>
+    <p id="headerSubtitle" class="trans-src-zh" contenteditable="true">哆啦美 & 小豬的峴港・會安 8天7夜慢活手冊</p>
+
+    <!-- 語言切換膠囊 -->
+    <div class="lang-capsules">
+      <button class="lang-pill active" onclick="setLangMode('both')">🇰🇷+🇹🇼 雙語</button>
+      <button class="lang-pill" onclick="setLangMode('ko')">🇰🇷 한국어</button>
+      <button class="lang-pill" onclick="setLangMode('zh')">🇹🇼 中文</button>
+    </div>
+  </header>
+
+
+  <!-- ==================== 頁面 1: 每日行程 ==================== -->
+  <div id="tab-itinerary" class="page-view active">
+    <!-- Day 1 - Day 8 橫向滑動選單 -->
+    <div class="day-scroll-nav">
+      <button class="day-tab-btn active" onclick="switchDaySub('d1', this)">Day 1 (8/25)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d2', this)">Day 2 (8/26)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d3', this)">Day 3 (8/27)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d4', this)">Day 4 (8/28)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d5', this)">Day 5 (8/29)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d6', this)">Day 6 (8/30)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d7', this)">Day 7 (8/31)</button>
+      <button class="day-tab-btn" onclick="switchDaySub('d8', this)">Day 8 (9/01)</button>
+    </div>
+
+    <div id="itinerary-content">
+      <!-- DAY 1 -->
+      <div id="d1" class="day-panel active">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">✈️ 다낭 도착 & 미쉐린 씨푸드</div>
+              <div class="mobile-card-badge" contenteditable="true">8/25 (화/二)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">抵達峴港・米其林海鮮之夜</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" alt="峴港夜景">
+            <div class="banner-caption">다낭 한강 야경 (峴港漢江夜景)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">18:00 – 19:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true">다낭 국제공항 도착 후 그랩(Grab)으로 시내 호텔 이동 및 체크인</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">抵達峴港機場，出關後叫 Grab 直達市區飯店辦理 Check-in 卸下行李。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">20:00 – 21:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">미쉐린 씨푸드</span> 예약된 미쉐린 해산물 레스토랑 (Mộc Quán 랍스터 & 치즈 굴구이)</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">享用預訂好的米其林海鮮餐廳（如 Mộc Quán 招牌奶油蒜蓉龍蝦、烤生蠔）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">21:30 – 22:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">야경 산책</span> 한강(Han River) 변 시원한 바람 맞으며 산책 후 호텔에서 푹 쉬기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">漫步韓江畔吹風看夜景，散步回飯店早點休息補充體力。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d1')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div id="d2" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🏮 호이안 이동 & 감성 카페</div>
+              <div class="mobile-card-badge" contenteditable="true">8/26 (수/三)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">前往會安・古鎮咖啡與放水燈</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="會安街景">
+            <div class="banner-caption">호이안 올드타운 (會安古鎮街景)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:00 – 12:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true">늦잠 자고 체크아웃 후 그랩으로 호이안 리조트 이동 (약 40분 소요)</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">睡飽退房，搭 Grab 直達會安度假飯店辦理入住（約 40 分鐘車程）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">12:30 – 13:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심</span> <b>Madam Khanh</b> 전설의 바삭 촉촉 반미 맛보기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">享用被譽為傳奇的 Madam Khanh 越式法國麵包。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:00 – 16:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">감성 카페</span> <b>Faifo Coffee</b> 루프탑에서 노란 기와지붕 배경으로 인생샷</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">登上 Faifo Coffee 老宅頂樓露天平台，俯瞰會安黃屋頂街景拍照。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">16:30 – 18:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Coral Spa Hoi An</b> 90분 커플 아로마 에센셜 오일 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Coral Spa Hoi An 享受 90 分鐘雙人天然香氛精油按摩。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">18:30 – 21:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">올드타운</span> 투본강 소원배 띄우기 & <b>Morning Glory</b> 저녁식사</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">秋盆河搭小船放水燈，晚餐品嚐 Morning Glory 經典高樓麵與白玫瑰。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d2')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div id="d3" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🥥 바구니배 & 안방비치 선셋</div>
+              <div class="mobile-card-badge" contenteditable="true">8/27 (목/四)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">椰林桶船・稻田咖啡・海灘夕陽</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="海灘風景">
+            <div class="banner-caption">안방비치 해변 힐링 (安邦海灘度假日落)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">10:30 – 11:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true">리조트에서 느긋하게 조식 먹고 준비하기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">飯店悠閒早餐、梳妝準備出發。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:30 – 13:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">체험</span> 코코넛 바구니배 타기 & 스핀 쇼 구경</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">迦南島體驗特色椰林桶船旋轉舞（避開早晨團客）。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:00 – 16:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">논뷰 카페</span> <b>Roving Chillhouse</b> 논 한가운데서 시원한 커피 힐링</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Roving Chillhouse 稻田中央的草席木棧道吹微風喝咖啡。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">16:30 – 18:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">선셋 비치</span> 안방비치 <b>The Deck House</b> 칵테일 & 일몰 감상</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">安邦海灘 The Deck House 躺在藍白度假椅上看海聽浪喝調酒。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 20:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Pandanus Spa</b> 허브 오일 마사지 & 수제 요거트</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Pandanus Spa Hoi An 庭園草本深層按摩，結束享用特製自製優格。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d3')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 4 -->
+      <div id="d4" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🌊 다낭 컴백 & 용다리 불쇼</div>
+              <div class="mobile-card-badge" contenteditable="true">8/28 (금/五)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">返回峴港・海景入住與龍橋噴火</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="美溪沙灘">
+            <div class="banner-caption">미케비치 푸른 바다 (美溪沙灘蔚藍海岸)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:30 – 12:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true">호이안 체크아웃 후 다낭 미케비치 앞 오션뷰 호텔 체크인</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">會安退房，搭車返回峴港入住美溪沙灘周邊海景飯店。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:00 – 14:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심</span> <b>Bếp Cuốn Da Nang</b> 미쉐린 추천 월남쌈 & 반쎄오</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Bếp Cuốn Da Nang 米其林推薦精緻越式春捲拼盤與烤肉煎餅。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:30 – 16:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">카페</span> <b>Cộng Cà Phê</b> 코코넛 스무디 커피 즐기기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Cộng Cà Phê 招牌椰子冰沙咖啡 享受冷氣甜點。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 20:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">저녁</span> <b>Bé Mặn</b> 현지인 인기 해변 해산물 포차 디너</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Bé Mặn 沙灘旁超人氣現炒海鮮大排檔。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">21:00 – 21:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">불쇼</span> <b>용다리(Dragon Bridge)</b> 밤 9시 불쇼 & 물쇼 관람!</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">前往龍橋欣賞週末限定 21:00 準時上演的震撼噴火噴水秀！</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d4')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div id="d5" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🏰 바나힐 & 핫스톤 스파</div>
+              <div class="mobile-card-badge" contenteditable="true">8/29 (토/六)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">午後巴拿山・佛手橋避人潮</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" alt="巴拿山">
+            <div class="banner-caption">바나힐 골든브릿지 (巴拿山雲霧與佛手金橋)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:00 – 12:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">브런치</span> <b>Phở Thìn 13 Lò Đúc</b> 소고기 볶음 쌀국수</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Phở Thìn 13 Lò Đúc 享用蔥香濃郁的爆炒牛肉河粉。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:00 – 17:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">바나힐</span> 케이블카 탑승 & 손바닥 골든브릿지 투어</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">搭高空纜車登頂、漫步法式小鎮與佛手黃金橋。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">19:00 – 21:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파 마사지</span> <b>Herbal Spa</b> 90분 허브 핫스톤 오일 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Herbal Spa 預約 90 分鐘草本熱石精油按摩，徹底舒緩疲勞。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d5')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 6 -->
+      <div id="d6" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🛍️ 핑크성당 & 한시장 & 젠스파</div>
+              <div class="mobile-card-badge" contenteditable="true">8/30 (일/日)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">粉紅教堂・市場採買・竹林禪風</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80" alt="咖啡時光">
+            <div class="banner-caption">다낭 감성 카페 (峴港精緻午茶時光)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">11:00 – 12:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">포토존</span> 핑크성당 인생샷 & 한시장 망고 쇼핑</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">粉紅大教堂拍照打卡 ＋ 漢市場（Cho Han）採買芒果乾。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">12:30 – 14:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">점심</span> <b>Bánh Xèo Bà Dưỡng</b> 바삭한 반쎄오 & 땅콩소스</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Bánh Xèo Bà Dưỡng 隱藏版名店越式脆皮煎餅沾花生醬。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">17:00 – 19:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">스파</span> <b>Nguon Spa (원 스파)</b> 대나무숲 힐링 커플 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Nguon Spa（源 Spa）竹林流水環境下的雙人禪意精油按摩。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d6')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 7 -->
+      <div id="d7" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">💙 산토리니 오션뷰 & 헤드스파</div>
+              <div class="mobile-card-badge" contenteditable="true">8/31 (월/一)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">聖托里尼海景・草本洗頭體驗</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="芳療放鬆">
+            <div class="banner-caption">베트남 허브 테라피 (越式草本舒壓芳療)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">13:30 – 16:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">오션뷰</span> <b>Son Tra Marina</b> 산토리니풍 180도 파노라마 카페</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Son Tra Marina 山茶半島藍白希臘風 180 度無敵海景咖啡。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">18:00 – 19:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spa" contenteditable="false">헤드스파</span> <b>Tree Spa Da Nang</b> 천연 허브 샴푸 & 마사지</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Tree Spa Da Nang 體驗 60 分鐘越式草本滋養洗頭＋肩頸舒壓。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">20:00 – 22:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-food" contenteditable="false">야시장</span> <b>손트라 야시장</b> 해산물 바비큐 & 낭만 즐기기</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Son Tra 夜市品嚐烤肉串、海鮮與享受最後一晚夜生活。</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d7')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+
+      <!-- DAY 8 -->
+      <div id="d8" class="day-panel" style="display:none;">
+        <div class="mobile-card">
+          <div class="mobile-card-header">
+            <div class="header-row-top">
+              <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🌿 가든 카페 여유 & 귀국</div>
+              <div class="mobile-card-badge" contenteditable="true">9/01 (화/二)</div>
+            </div>
+            <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">庭園咖啡放空・滿載回憶返程</div>
+          </div>
+          <div class="mobile-banner">
+            <button class="banner-edit-btn" onclick="changeBannerImage(this)">📷 換照片 (사진 변경)</button>
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="庭園咖啡">
+            <div class="banner-caption">그리너리 가든 카페 (綠意庭園咖啡館)</div>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">12:30 – 14:00</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-cafe" contenteditable="false">라스트 커피</span> <b>Dreamer Coffee</b> 숲속 정원 카페에서 담소</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">Dreamer Coffee 在綠意庭園咖啡館放空聊天、整理紀念品。</div>
+            </div>
+            <div class="item">
+              <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+              <span class="item-time" contenteditable="true">14:00 – 14:30</span>
+              <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">공항 이동</span> 그랩 타고 다낭 국제공항 이동 (15분) 후 귀국 ✈️</div>
+              <div class="item-trans trans-src-zh" contenteditable="true">叫 Grab 前往峴港機場（車程約 15 分鐘），準備搭機返程！✈️</div>
+            </div>
+          </div>
+          <button class="mobile-add-btn" onclick="addNewItem('d8')">➕ 새로운 일정 추가 (新增行程)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 2: 交通指南 ==================== -->
+  <div id="tab-traffic" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🚗 다낭 & 호이안 교통 가이드</div>
+          <div class="mobile-card-badge" contenteditable="true">그랩 & 차량</div>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">峴港與會安完整交通指南</div>
+      </div>
+      <div class="mobile-card-list" id="traffic-list">
+        <!-- 1. 그랩 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=600&q=80" alt="그랩">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">📱 그랩 카 (Grab Car 4인승)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">📱 Grab 叫車（4人座汽車）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">가장 대중적이고 편리한 이동수단! 신용카드 등록 시 바가지 걱정 없음.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">市區與跨城首選！APP 綁定信用卡扣款，透明免殺價。</div>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--accent-badge); margin-bottom:6px;" contenteditable="true">
+              💰 시내: 30k-70k VND (₩1.6k-3.8k / NT$40-90)<br>
+              💰 다낭↔호이안: 250k-350k VND (₩13.5k-19k / NT$320-450)
+            </div>
+            <a href="https://www.grab.com/vn/en/transport/car/" target="_blank" class="place-link-m">🔗 Grab 앱 정보 (下載/介紹)</a>
+          </div>
+        </div>
+
+        <!-- 2. 바나힐 대절 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=600&q=80" alt="렌터卡">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🚐 프라이빗 렌트카 (전용 대절)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🚐 專車包車服務（含司機）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">바나힐 장거리 이동 시 기사 포함 전용 차량 대절.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">前往巴拿山或遠程景點最舒適，含司機專車接送與定點等候。</div>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--accent-badge); margin-bottom:6px;" contenteditable="true">
+              💰 바나힐 왕복: 550k-700k VND (₩30k-38k / NT$700-900)
+            </div>
+            <a href="https://www.klook.com" target="_blank" class="place-link-m">🔗 클룩/KKday 차량예약</a>
+          </div>
+        </div>
+
+        <!-- 3. 호이안 시클로 -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600&q=80" alt="시클로">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🚲 호이안 시클로 (전통 인력거)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🚲 會安人力三輪車（Cyclo）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">호이안 올드타운 골목을 둘러보는 낭만 전통 삼륜차.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">古鎮內限定的浪漫人力三輪車，穿梭老街巷弄超有風情。</div>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--accent-badge); margin-bottom:6px;" contenteditable="true">
+              💰 탑승: 약 150,000 VND / 대 (₩8,000 / NT$190)
+            </div>
+            <a href="https://maps.google.com/?q=Hoi+An+Ancient+Town" target="_blank" class="place-link-m">📍 호이안 올드타운 지도</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 3: 咖啡廳精選 ==================== -->
+  <div id="tab-cafe" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">☕ 감성 카페 베스트</div>
+          <button class="header-badge" onclick="openAddModal('cafe')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">峴港與會安精選人氣咖啡廳</div>
+      </div>
+      <div class="mobile-card-list" id="cafe-list">
+        <!-- 1. Roving Chillhouse -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Roving Chillhouse">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌾 Roving Chillhouse (호이안 논뷰)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌾 Roving Chillhouse（稻田景觀）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">푸른 논 한가운데 펼쳐진 데크와 빈백 소파! 일몰 힐링.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">會安必訪稻田景觀咖啡廳，坐在木棧道與草席上吹風看日落。</div>
+            <a href="https://maps.google.com/?q=Roving+Chillhouse+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. Faifo Coffee -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Faifo Coffee">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🏮 Faifo Coffee (호이안 루프탑)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🏮 Faifo Coffee（古鎮頂樓景觀）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">노란 벽과 기와지붕이 한눈에 보이는 대표 루프탑 포토존!</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">頂樓露天座位俯瞰會安古鎮黃色瓦屋頂，經典必拍地標。</div>
+            <a href="https://maps.google.com/?q=Faifo+Coffee+Hoi+An" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Son Tra Marina -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80" alt="Son Tra Marina">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🌊 Son Tra Marina (산토리니 오션뷰)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🌊 Son Tra Marina（希臘聖托里尼風）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">블루&화이트 산토리니풍 180도 파노라마 오션뷰.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">山茶半島藍白聖托里尼風情，坐擁 180 度無敵蔚藍海景。</div>
+            <a href="https://maps.google.com/?q=Son+Tra+Marina+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== 頁面 4: 美食餐廳 ==================== -->
+  <div id="tab-food" class="page-view">
+    <div class="mobile-card">
+      <div class="mobile-card-header">
+        <div class="header-row-top">
+          <div class="mobile-card-title-ko trans-src-ko" contenteditable="true">🦞 미식 레스토랑 베스트</div>
+          <button class="header-badge" onclick="openAddModal('food')">➕ 新增</button>
+        </div>
+        <div class="mobile-card-title-zh trans-src-zh" contenteditable="true">米其林必比登與在地必吃美景餐廳</div>
+      </div>
+      <div class="mobile-card-list" id="food-list">
+        <!-- 1. Mộc Quán -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=600&q=80" alt="Moc Quan">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🦞 묙콴 (Mộc Quán Seafood)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🦞 Mộc Quán 海鮮餐廳（米其林必比登）</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">🌟 미쉐린 빕구르망! 갈릭버터 랍스터 & 치즈 굴구이.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">米其林必比登推薦！招牌奶油蒜蓉龍蝦、起司生蠔。</div>
+            <a href="https://maps.google.com/?q=Moc+Quan+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 2. Bé Mặn -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=600&q=80" alt="Be Man">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🦐 베만 해산물 (Quán Bé Mặn)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🦐 Bé Mặn 現炒海鮮大排檔</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">미케비치 앞 대형 해산물 포차! 살아있는 싱싱한 해산물.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">美溪沙灘超人氣現炒海鮮大排檔，活海鮮秤重計價。</div>
+            <a href="https://maps.google.com/?q=Quan+Be+Man+Da+Nang" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+
+        <!-- 3. Madam Khanh -->
+        <div class="place-card-m">
+          <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+          <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+          <img class="place-img-m" src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=600&q=80" alt="Madam Khanh">
+          <div class="place-body-m">
+            <div class="place-title-ko trans-src-ko" contenteditable="true">🥖 마담콴 반미퀸 (Madam Khanh)</div>
+            <div class="place-title-zh trans-src-zh" contenteditable="true">🥖 Madam Khanh 傳奇法國麵包</div>
+            <div class="place-desc-ko trans-src-ko" contenteditable="true">호이안 1위 반미! 바삭한 바게트 속 특제 소스.</div>
+            <div class="place-desc-zh trans-src-zh" contenteditable="true">被譽為「會安第一」的傳奇越式法國麵包。</div>
+            <a href="https://maps.google.com/?q=Madam+Khanh+The+Banh+Mi+Queen" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 📱 底部 App 固定導覽列 (Bottom Tab Bar) -->
+<div class="app-tabbar">
+  <button class="tabbar-item active" onclick="switchAppTab('tab-itinerary', this)">
+    <span class="tabbar-icon">📅</span>
+    <span>일정 (行程)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-traffic', this)">
+    <span class="tabbar-icon">🚗</span>
+    <span>교통 (交通)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-cafe', this)">
+    <span class="tabbar-icon">☕</span>
+    <span>카페 (咖啡)</span>
+  </button>
+  <button class="tabbar-item" onclick="switchAppTab('tab-food', this)">
+    <span class="tabbar-icon">🦞</span>
+    <span>맛집 (美食)</span>
+  </button>
+</div>
+
+<!-- 新增彈窗 Sheet -->
+<div id="addModal" class="modal-overlay">
+  <div class="modal-sheet">
+    <div class="modal-title" id="modalTitle">➕ 새로운 장소 추가</div>
+    <div class="form-group">
+      <label>장소 이름 (店名 - 韓文或英文) *</label>
+      <input type="text" id="inputNameKo" placeholder="예: Little Faifo Cafe" oninput="autoTranslateModalField('inputNameKo', 'inputNameZh', 'ko', 'zh')">
+    </div>
+    <div class="form-group">
+      <label>店名 (中文店名 - 支援自動翻譯) *</label>
+      <input type="text" id="inputNameZh" placeholder="例如：小會安咖啡館" oninput="autoTranslateModalField('inputNameZh', 'inputNameKo', 'zh', 'ko')">
+    </div>
+    <div class="form-group">
+      <label>한국어 설명 (韓文描述 - 自動翻譯)</label>
+      <input type="text" id="inputDescKo" placeholder="예: 루프탑 뷰가 예쁜 카페" oninput="autoTranslateModalField('inputDescKo', 'inputDescZh', 'ko', 'zh')">
+    </div>
+    <div class="form-group">
+      <label>中文 說明 (中文備忘 - 自動翻譯)</label>
+      <input type="text" id="inputDescZh" placeholder="例如：超好拍的頂樓海景下午茶" oninput="autoTranslateModalField('inputDescZh', 'inputDescKo', 'zh', 'ko')">
+    </div>
+    <div class="form-group">
+      <label>Google 지도 URL (地圖連結)</label>
+      <input type="text" id="inputLink" placeholder="https://maps.google.com/...">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddModal()">취소 (取消)</button>
+      <button class="btn-submit" onclick="submitNewPlace()">추가하기 (確認新增)</button>
+    </div>
+  </div>
+</div>
+
+<div id="saveToast" class="save-toast">✨ 동기화 완료! (已同步更新)</div>
+
+<script>
+  let currentModalType = 'cafe';
+  const STORAGE_KEY = 'couple_sync_travel_planner_v9';
+  
+  // 1. 自動從 URL 讀取 ?room= 房間代碼
+  const urlParams = new URLSearchParams(window.location.search);
+  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG2026';
+  currentRoomId = currentRoomId.trim().toUpperCase();
+  localStorage.setItem('couple_trip_room_id', currentRoomId);
+
+  // ==================== ☁️ 雲端 Firebase 即時多裝置同步 ====================
+  const firebaseConfig = {
+    databaseURL: "https://couple-trip-sync-default-rtdb.firebaseio.com"
+  };
+  
+  let dbRef = null;
+  let isReceivingCloudData = false;
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    initFirebaseSync();
+  } catch (e) {
+    console.warn("Firebase fallback:", e);
+  }
+
+  function initFirebaseSync() {
+    dbRef = firebase.database().ref("trips/" + currentRoomId);
+    
+    // 監聽雲端即時變更 (任何一端修改 -> 0.5 秒內兩端同步)
+    dbRef.on('value', (snapshot) => {
+      const cloudData = snapshot.val();
+      if (cloudData && !isReceivingCloudData) {
+        isReceivingCloudData = true;
+        renderDataToDOM(cloudData);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudData));
+        showToast('☁️ 상대방의 변경사항이 실시간 동기화되었습니다! (已即時同步更新！)');
+        document.getElementById('syncDot').className = 'sync-dot';
+        setTimeout(() => { isReceivingCloudData = false; }, 300);
+      }
+    }, (err) => {
+      console.warn("Cloud status:", err);
+      document.getElementById('syncDot').className = 'sync-dot offline';
+    });
+  }
+
+  function pushToCloud(data) {
+    if (dbRef && !isReceivingCloudData) {
+      document.getElementById('syncDot').className = 'sync-dot syncing';
+      dbRef.set(data).then(() => {
+        document.getElementById('syncDot').className = 'sync-dot';
+      }).catch((e) => {
+        document.getElementById('syncDot').className = 'sync-dot offline';
+      });
+    }
+  }
+
+  function copyShareableLink() {
+    const baseUrl = "https://miggo1999-dot.github.io/Danang-trip/";
+    const shareableUrl = baseUrl + '?room=' + currentRoomId;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareableUrl).then(() => {
+        showToast('🔗 전용 공유 링크가 복사되었습니다! (專屬網址已複製！)');
+        alert('專屬同步網址已複製到剪貼簿！\n\n只要將這個網址傳給女朋友，她在手機上打開就是和你 100% 即時同步的專屬手冊：\n' + shareableUrl);
+      });
+    } else {
+      prompt('請複製下方專屬連線網址傳給女朋友：', shareableUrl);
+    }
+  }
+
+  function renderDataToDOM(data) {
+    if (data.headerEmoji) document.getElementById('headerEmoji').innerHTML = data.headerEmoji;
+    if (data.headerBadge) document.getElementById('headerBadge').innerHTML = data.headerBadge;
+    if (data.headerTitle) document.getElementById('headerTitle').innerHTML = data.headerTitle;
+    if (data.headerSubtitle) document.getElementById('headerSubtitle').innerHTML = data.headerSubtitle;
+    if (data.itinerary) document.getElementById('itinerary-content').innerHTML = data.itinerary;
+    if (data.traffic) document.getElementById('traffic-list').innerHTML = data.traffic;
+    if (data.cafeList) document.getElementById('cafe-list').innerHTML = data.cafeList;
+    if (data.foodList) document.getElementById('food-list').innerHTML = data.foodList;
+    if (data.primaryColor) setCustomPrimaryColor(data.primaryColor);
+    attachInputListeners();
+  }
+
+  function collectDOMData() {
+    return {
+      headerEmoji: document.getElementById('headerEmoji').innerHTML,
+      headerBadge: document.getElementById('headerBadge').innerHTML,
+      headerTitle: document.getElementById('headerTitle').innerHTML,
+      headerSubtitle: document.getElementById('headerSubtitle').innerHTML,
+      itinerary: document.getElementById('itinerary-content').innerHTML,
+      traffic: document.getElementById('traffic-list').innerHTML,
+      cafeList: document.getElementById('cafe-list').innerHTML,
+      foodList: document.getElementById('food-list').innerHTML,
+      lastUpdated: Date.now()
+    };
+  }
+
+  // ==================== ⚡ 全域即時雙向翻譯引擎 ====================
+  let translateTimer = null;
+  let isTranslating = false;
+
+  async function translateTextOnline(text, fromLang, toLang) {
+    if (!text || text.trim() === '') return '';
+    try {
+      const src = fromLang === 'zh' ? 'zh-TW' : 'ko';
+      const tgt = toLang === 'zh' ? 'zh-TW' : 'ko';
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${tgt}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data && data.responseData && data.responseData.translatedText) {
+        const txt = document.createElement('textarea');
+        txt.innerHTML = data.responseData.translatedText;
+        return txt.value;
+      }
+    } catch (e) {
+      console.warn('線上翻譯暫時繁忙:', e);
+    }
+    return null;
+  }
+
+  function handleLiveTranslateInput(e) {
+    if (isTranslating || isReceivingCloudData) return;
+    const target = e.target;
+    clearTimeout(translateTimer);
+
+    translateTimer = setTimeout(async () => {
+      if (target.classList.contains('trans-src-ko')) {
+        let parent = target.closest('.item') || target.closest('.mobile-card-header') || target.closest('.place-body-m') || target.closest('header');
+        if (parent) {
+          const zhEl = parent.querySelector('.trans-src-zh');
+          if (zhEl) {
+            const rawText = target.innerText.trim();
+            if (rawText) {
+              const trans = await translateTextOnline(rawText, 'ko', 'zh');
+              if (trans) {
+                isTranslating = true;
+                zhEl.innerText = trans;
+                isTranslating = false;
+                showToast('✨ 韓文已同步翻譯成中文！');
+              }
+            }
+          }
+        }
+      } else if (target.classList.contains('trans-src-zh')) {
+        let parent = target.closest('.item') || target.closest('.mobile-card-header') || target.closest('.place-body-m') || target.closest('header');
+        if (parent) {
+          const koEl = parent.querySelector('.trans-src-ko');
+          if (koEl) {
+            const rawText = target.innerText.trim();
+            if (rawText) {
+              const trans = await translateTextOnline(rawText, 'zh', 'ko');
+              if (trans) {
+                isTranslating = true;
+                koEl.innerText = trans;
+                isTranslating = false;
+                showToast('✨ 中文已同步翻譯成韓文！');
+              }
+            }
+          }
+        }
+      }
+      
+      saveAndSync();
+    }, 1200);
+  }
+
+  let modalFieldTimer = null;
+  function autoTranslateModalField(srcId, targetId, fromLang, toLang) {
+    clearTimeout(modalFieldTimer);
+    modalFieldTimer = setTimeout(async () => {
+      const srcVal = document.getElementById(srcId).value.trim();
+      if (srcVal) {
+        const trans = await translateTextOnline(srcVal, fromLang, toLang);
+        if (trans) document.getElementById(targetId).value = trans;
+      }
+    }, 1000);
+  }
+
+  function saveAndSync(manual = false) {
+    const data = collectDOMData();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    pushToCloud(data);
+    if (manual) showToast('☁️ 클라우드 동기화 완료! (已同步至雲端)');
+  }
+
+  // 主題色庫
+  const THEMES = {
+    dorami: { primary: '#9B72CF', light: '#EBDFF7', pastel: '#F3ECFA', dark: '#583D72', border: '#D8C7EB', badge: '#D85A7F', bg: '#F7F3FB', emoji: '🎀 🐷 🌸 🍰', badgeText: "Dorami & Piggy's Lavender Paradise 💜" },
+    miffy: { primary: '#8A6BA8', light: '#E7DCF5', pastel: '#F1E9FA', dark: '#4D3663', border: '#D5C4EB', badge: '#9D84B7', bg: '#FAF6FD', emoji: '🐰 🌷 🌸 🎀', badgeText: "Miffy's Soft Lavender Dream 💜" },
+    sakura: { primary: '#FF8BA7', light: '#FFDCE5', pastel: '#FFF0F3', dark: '#6E2C3D', border: '#FFCCD5', badge: '#E05780', bg: '#FFFDF9', emoji: '🌸 🍓 🎀 🧸', badgeText: "Sakura Peach Sweet Romance 💕" },
+    matcha: { primary: '#52966B', light: '#D3ECD9', pastel: '#EAF7ED', dark: '#274B34', border: '#BFE3C8', badge: '#D68945', bg: '#F6FBF7', emoji: '🍵 🌿 🍃 🍡', badgeText: "Matcha Cream Healing Trip 🌿" },
+    ocean: { primary: '#3A86C8', light: '#D2E8FA', pastel: '#EBF4FC', dark: '#1C4263', border: '#B8DBF7', badge: '#E76F51', bg: '#F4FAFF', emoji: '🌊 🐬 🐚 🌴', badgeText: "Ocean Blue Island Vacation 🌊" }
+  };
+
+  function applyPresetTheme(themeKey) {
+    document.querySelectorAll('.theme-pill-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const t = THEMES[themeKey];
+    if (t) {
+      const root = document.documentElement;
+      root.style.setProperty('--lavender-primary', t.primary);
+      root.style.setProperty('--lavender-light', t.light);
+      root.style.setProperty('--lavender-pastel', t.pastel);
+      root.style.setProperty('--lavender-dark', t.dark);
+      root.style.setProperty('--lavender-border', t.border);
+      root.style.setProperty('--accent-badge', t.badge);
+      root.style.setProperty('--bg-lavender', t.bg);
+      if (t.emoji) document.getElementById('headerEmoji').textContent = t.emoji;
+      if (t.badgeText) document.getElementById('headerBadge').textContent = t.badgeText;
+      saveAndSync(false);
+    }
+  }
+
+  function setCustomPrimaryColor(colorHex) {
+    const root = document.documentElement;
+    root.style.setProperty('--lavender-primary', colorHex);
+    root.style.setProperty('--lavender-border', colorHex + '55');
+    root.style.setProperty('--lavender-pastel', colorHex + '18');
+    root.style.setProperty('--lavender-light', colorHex + '33');
+  }
+
+  function switchAppTab(tabId, btn) {
+    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tabbar-item').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function switchDaySub(dayId, btn) {
+    document.querySelectorAll('.day-panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.day-tab-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(dayId);
+    if (target) target.style.display = 'block';
+    if (btn) btn.classList.add('active');
+  }
+
+  function setLangMode(mode) {
+    document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const transElements = document.querySelectorAll('.trans-src-zh');
+    const contentElements = document.querySelectorAll('.trans-src-ko');
+
+    if (mode === 'both') {
+      transElements.forEach(el => el.style.display = 'block');
+      contentElements.forEach(el => el.style.display = 'block');
+    } else if (mode === 'ko') {
+      transElements.forEach(el => el.style.display = 'none');
+      contentElements.forEach(el => el.style.display = 'block');
+    } else if (mode === 'zh') {
+      transElements.forEach(el => {
+        el.style.display = 'block';
+      });
+      contentElements.forEach(el => el.style.display = 'none');
+    }
+  }
+
+  function deleteItem(btn) {
+    if (confirm('이 일정을 삭제하시겠습니까? (確定刪除此行程？)')) {
+      btn.closest('.item').remove();
+      saveAndSync();
+    }
+  }
+
+  function addNewItem(dayId) {
+    const timeline = document.querySelector('#' + dayId + ' .timeline');
+    const newItem = document.createElement('div');
+    newItem.className = 'item';
+    newItem.innerHTML = `
+      <button class="item-del-btn" onclick="deleteItem(this)">✕</button>
+      <span class="item-time" contenteditable="true">15:00 – 16:30</span>
+      <div class="item-content trans-src-ko" contenteditable="true"><span class="tag tag-spot" contenteditable="false">새 일정</span> 새로운 일정을 입력해주세요...</div>
+      <div class="item-trans trans-src-zh" contenteditable="true">請輸入中文翻譯或備忘...</div>
+    `;
+    timeline.appendChild(newItem);
+    attachInputListeners();
+    saveAndSync();
+  }
+
+  function openAddModal(type) {
+    currentModalType = type;
+    document.getElementById('modalTitle').textContent = type === 'cafe' ? '☕ 새로운 카페 추가 (新增咖啡廳)' : '🦞 새로운 맛집 추가 (新增美食餐廳)';
+    document.getElementById('inputNameKo').value = '';
+    document.getElementById('inputNameZh').value = '';
+    document.getElementById('inputDescKo').value = '';
+    document.getElementById('inputDescZh').value = '';
+    document.getElementById('inputLink').value = '';
+    document.getElementById('addModal').classList.add('active');
+  }
+
+  function closeAddModal() {
+    document.getElementById('addModal').classList.remove('active');
+  }
+
+  function submitNewPlace() {
+    const nameKo = document.getElementById('inputNameKo').value.trim() || document.getElementById('inputNameZh').value.trim();
+    const nameZh = document.getElementById('inputNameZh').value.trim() || nameKo;
+    if (!nameKo) { alert('장소 이름을 입력해주세요! (請輸入店名)'); return; }
+    const descKo = document.getElementById('inputDescKo').value.trim() || '추천 장소';
+    const descZh = document.getElementById('inputDescZh').value.trim() || '自訂精選推薦地點';
+    const img = currentModalType === 'cafe' 
+      ? 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80'
+      : 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80';
+    const link = document.getElementById('inputLink').value.trim() || `https://maps.google.com/?q=${encodeURIComponent(nameKo + ' Da Nang')}`;
+
+    const newCard = document.createElement('div');
+    newCard.className = 'place-card-m';
+    newCard.innerHTML = `
+      <button class="place-img-edit-btn" onclick="changeCardImage(this)">📷 換圖</button>
+      <button class="item-del-btn" onclick="deletePlaceCard(this)">✕</button>
+      <img class="place-img-m" src="${img}" alt="${nameKo}">
+      <div class="place-body-m">
+        <div class="place-title-ko trans-src-ko" contenteditable="true">${currentModalType === 'cafe' ? '☕' : '🍴'} ${nameKo}</div>
+        <div class="place-title-zh trans-src-zh" contenteditable="true">${nameZh}</div>
+        <div class="place-desc-ko trans-src-ko" contenteditable="true">${descKo}</div>
+        <div class="place-desc-zh trans-src-zh" contenteditable="true">${descZh}</div>
+        <a href="${link}" target="_blank" class="place-link-m">📍 Google 지도 바로가기</a>
+      </div>
+    `;
+
+    const targetList = currentModalType === 'cafe' ? document.getElementById('cafe-list') : document.getElementById('food-list');
+    targetList.insertBefore(newCard, targetList.firstChild);
+
+    attachInputListeners();
+    closeAddModal();
+    saveAndSync();
+  }
+
+  function deletePlaceCard(btn) {
+    if (confirm('이 장소를 삭제하시겠습니까? (確定刪除此店？)')) {
+      btn.closest('.place-card-m').remove();
+      saveAndSync();
+    }
+  }
+
+  // ==================== 📷 輕鬆更換圖片功能 ====================
+  const PHOTO_PRESETS = [
+    { name: "🌊 美溪海灘 (My Khe Beach)", url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏮 會安古鎮 (Hoi An Town)", url: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏰 巴拿山佛手橋 (Ba Na Hills)", url: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏖️ 安邦海灘度假 (An Bang Beach)", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" },
+    { name: "☕ 質感咖啡 (Cozy Cafe)", url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" },
+    { name: "🦞 米其林海鮮 (Seafood Gourmet)", url: "https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=800&q=80" },
+    { name: "💆‍♀️ 精油芳療 (Relaxing Spa)", url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" },
+    { name: "🌉 峴港漢江夜景 (Han River Night)", url: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" }
+  ];
+
+  function changeBannerImage(btn) {
+    const banner = btn.closest('.mobile-banner');
+    const imgEl = banner.querySelector('img');
+    
+    let optionsText = "請選擇預設美圖編號 (1~8) 或直接貼上圖片網址 (URL):\n\n";
+    PHOTO_PRESETS.forEach((p, idx) => {
+      optionsText += `${idx + 1}. ${p.name}\n`;
+    });
+
+    const choice = prompt(optionsText + "\n請輸入 1~8 或貼上圖片網址：", "1");
+    if (!choice) return;
+
+    const num = parseInt(choice.trim());
+    if (num >= 1 && num <= PHOTO_PRESETS.length) {
+      imgEl.src = PHOTO_PRESETS[num - 1].url;
+    } else if (choice.startsWith("http")) {
+      imgEl.src = choice.trim();
+    } else {
+      alert("請輸入有效的編號 (1~8) 或完整圖片網址 (http...)！");
+      return;
+    }
+
+    saveAndSync();
+    showToast("📷 사진이 변경되었습니다! (照片已更新)");
+  }
+
+  function changeCardImage(btn) {
+    const card = btn.closest('.place-card-m');
+    const imgEl = card.querySelector('.place-img-m');
+    const newUrl = prompt("請貼上新的圖片網址 (URL)：\n새 이미지 URL을 입력하세요:", imgEl.src);
+    if (newUrl && newUrl.trim() !== '') {
+      imgEl.src = newUrl.trim();
+      saveAndSync();
+      showToast("📷 사진이 변경되었습니다! (照片已更新)");
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('saveToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function attachInputListeners() {
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.removeEventListener('input', handleLiveTranslateInput);
+      el.addEventListener('input', handleLiveTranslateInput);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        renderDataToDOM(parsed);
+      } catch (e) { console.error(e); }
+    }
+    attachInputListeners();
+  });
+</script>
+
+</body>
+</html>
