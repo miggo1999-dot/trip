@@ -6,8 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="다낭慢活手冊">
-  <title>🎀 다낭·호이안 커플 여행手札 🐷</title>
+  <title>🎀 다낭·호이안 커플 실시간 여행 플래너 🐷</title>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
   <style>
     :root {
@@ -51,46 +55,83 @@
       margin: 0 auto;
     }
 
-    /* 📤 📥 匯出／匯入存檔控制列 */
-    .backup-control-bar {
+    /* 雲端即時連線狀態列 */
+    .sync-status-bar {
       background: #FFFFFF;
       border: 2px solid var(--lavender-border);
       border-radius: 18px;
-      padding: 8px 12px;
+      padding: 8px 14px;
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 14px rgba(155, 114, 207, 0.08);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--lavender-dark);
+    }
+
+    .sync-indicator {
+      display: flex;
+      align-items: center;
       gap: 6px;
     }
 
-    .backup-btn {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 6px 10px;
+    .sync-dot {
+      width: 9px;
+      height: 9px;
+      background: #59CD90;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    .sync-dot.offline { background: #FFB3BA; }
+    .sync-dot.syncing { background: #FFD166; }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
+    }
+
+    .share-link-btn {
+      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
+      color: white;
+      border: none;
+      padding: 5px 12px;
       border-radius: 12px;
       font-size: 0.78rem;
       font-weight: 700;
-      font-family: inherit;
       cursor: pointer;
-      border: none;
-      transition: all 0.2s;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .btn-export {
-      background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
-      color: #fff;
+
+    /* 全局即時翻譯雙語提示卡片 */
+    .all-trans-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--lavender-border);
+      border-radius: 16px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.05);
+      text-align: center;
     }
-    .btn-import {
-      background: var(--lavender-pastel);
-      border: 1.5px solid var(--lavender-primary);
+    .all-trans-ko {
+      font-size: 0.84rem;
+      font-weight: 800;
       color: var(--lavender-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
-    .backup-btn:active {
-      transform: scale(0.96);
+    .all-trans-zh {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #7B6894;
+      margin-top: 2px;
     }
 
     /* Header */
@@ -293,7 +334,7 @@
       white-space: nowrap;
     }
 
-    /* 照片容器與防遮擋按鈕 */
+    /* 🖼️ 照片容器與防遮擋按鈕 */
     .mobile-banner {
       width: 100%;
       height: 165px;
@@ -353,6 +394,9 @@
       z-index: 50;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       pointer-events: auto;
+    }
+    .place-img-edit-btn:active {
+      transform: scale(0.96);
     }
 
     .banner-caption {
@@ -705,18 +749,27 @@
 
 <div class="container">
 
-  <!-- 📤 📥 方案一：一鍵匯出／匯入存檔控制列 -->
-  <div class="backup-control-bar">
-    <button class="backup-btn btn-export" onclick="exportTripData()">
-      <span>📤</span>
-      <span>匯出行程檔案 (내보내기)</span>
+  <!-- ☁️ 雲端即時同步與專屬網址分享列 -->
+  <div class="sync-status-bar">
+    <div class="sync-indicator">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncStatusText">실시간 클라우드 동기화 (雲端即時連線)</span>
+    </div>
+    <button class="share-link-btn" onclick="copyShareableLink()">
+      <span>🔗</span>
+      <span>공유 링크 복사 (複製網址)</span>
     </button>
-    <button class="backup-btn btn-import" onclick="document.getElementById('importFileInput').click()">
-      <span>📥</span>
-      <span>載入最新存檔 (불러오기)</span>
-    </button>
-    <!-- 隱藏的檔案上傳輸入框 -->
-    <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="importTripData(event)">
+  </div>
+
+  <!-- 全區雙向即時翻譯雙語提示卡片 -->
+  <div class="all-trans-card">
+    <div class="all-trans-ko">
+      <span>⚡</span>
+      <span>전 구역 실시간 양방향 번역 활성화 (중국어 ⇄ 한국어)</span>
+    </div>
+    <div class="all-trans-zh">
+      <span>全區雙向即時翻譯已啟用 (改中文自動翻韓文・改韓文自動翻中文)</span>
+    </div>
   </div>
 
   <!-- 🎨 主題切換 (橫向滑動) -->
@@ -1334,44 +1387,76 @@
   </div>
 </div>
 
-<div id="saveToast" class="save-toast">✨ 저장되었습니다! (已儲存)</div>
+<div id="saveToast" class="save-toast">✨ 동기화 완료! (已同步更新)</div>
 
 <script>
   let currentModalType = 'cafe';
-  const STORAGE_KEY = 'couple_sync_travel_planner_json_v1';
+  const STORAGE_KEY = 'couple_sync_travel_planner_v9';
+  
+  // 1. 自動從 URL 讀取 ?room= 房間代碼
+  const urlParams = new URLSearchParams(window.location.search);
+  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG2026';
+  currentRoomId = currentRoomId.trim().toUpperCase();
+  localStorage.setItem('couple_trip_room_id', currentRoomId);
 
-  // ==================== 📤 📥 方案一：匯出與載入 JSON 檔案 ====================
-  function exportTripData() {
-    const data = collectDOMData();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    const dateStr = new Date().toISOString().slice(0, 10);
-    downloadAnchor.setAttribute("download", `danang_trip_backup_${dateStr}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    showToast("📤 行程備份檔已匯出下載！");
+  // ==================== ☁️ 已成功綁定你的 Firebase 資料庫網址 ====================
+  const firebaseConfig = {
+    databaseURL: "https://dana-trip-dd568-default-rtdb.firebaseio.com"
+  };
+  
+  let dbRef = null;
+  let isReceivingCloudData = false;
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    initFirebaseSync();
+  } catch (e) {
+    console.warn("Firebase fallback:", e);
   }
 
-  function importTripData(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const importedData = JSON.parse(e.target.result);
-        renderDataToDOM(importedData);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData));
-        showToast("📥 最新行程已成功載入更新！");
-      } catch (err) {
-        alert("檔案格式不正確，載入失敗！");
-        console.error(err);
+  function initFirebaseSync() {
+    dbRef = firebase.database().ref("trips/" + currentRoomId);
+    
+    // 監聽雲端即時變更 (任何一端修改 -> 0.5 秒內兩端同步)
+    dbRef.on('value', (snapshot) => {
+      const cloudData = snapshot.val();
+      if (cloudData && !isReceivingCloudData) {
+        isReceivingCloudData = true;
+        renderDataToDOM(cloudData);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudData));
+        showToast('☁️ 상대방의 변경사항이 실시간 동기화되었습니다! (已即時同步更新！)');
+        document.getElementById('syncDot').className = 'sync-dot';
+        setTimeout(() => { isReceivingCloudData = false; }, 300);
       }
-    };
-    reader.readAsText(file);
-    event.target.value = "";
+    }, (err) => {
+      console.warn("Cloud status:", err);
+      document.getElementById('syncDot').className = 'sync-dot offline';
+    });
+  }
+
+  function pushToCloud(data) {
+    if (dbRef && !isReceivingCloudData) {
+      document.getElementById('syncDot').className = 'sync-dot syncing';
+      dbRef.set(data).then(() => {
+        document.getElementById('syncDot').className = 'sync-dot';
+      }).catch((e) => {
+        document.getElementById('syncDot').className = 'sync-dot offline';
+      });
+    }
+  }
+
+  function copyShareableLink() {
+    const baseUrl = "https://miggo1999-dot.github.io/trip/";
+    const shareableUrl = baseUrl + '?room=' + currentRoomId;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareableUrl).then(() => {
+        showToast('🔗 전용 공유 링크가 복사되었습니다! (專屬網址已複製！)');
+        alert('專屬同步網址已複製到剪貼簿！\n\n只要將這個網址傳給女朋友，她在手機上打開就是和你 100% 即時同步的專屬手冊：\n' + shareableUrl);
+      });
+    } else {
+      prompt('請複製下方專屬連線網址傳給女朋友：', shareableUrl);
+    }
   }
 
   function renderDataToDOM(data) {
@@ -1425,7 +1510,7 @@
   }
 
   function handleLiveTranslateInput(e) {
-    if (isTranslating) return;
+    if (isTranslating || isReceivingCloudData) return;
     const target = e.target;
     clearTimeout(translateTimer);
 
@@ -1465,6 +1550,7 @@
           }
         }
       }
+      
       saveAndSync();
     }, 1200);
   }
@@ -1484,7 +1570,8 @@
   function saveAndSync(manual = false) {
     const data = collectDOMData();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    if (manual) showToast('✨ 변경사항이 저장되었습니다! (已儲存)');
+    pushToCloud(data);
+    if (manual) showToast('☁️ 클라우드 동기화 완료! (已同步至雲端)');
   }
 
   // 主題色庫
