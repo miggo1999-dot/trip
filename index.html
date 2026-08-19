@@ -61,15 +61,16 @@
       background: #FFFFFF;
       border: 2px solid var(--lavender-border);
       border-radius: 18px;
-      padding: 8px 14px;
-      margin-bottom: 10px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 14px rgba(155, 114, 207, 0.08);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--lavender-dark);
+      gap: 6px;
     }
 
     .sync-indicator {
@@ -93,46 +94,75 @@
       0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
     }
 
+    .sync-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
     .share-link-btn {
       background: linear-gradient(135deg, var(--lavender-primary), var(--accent-badge));
       color: white;
       border: none;
-      padding: 5px 12px;
+      padding: 5px 10px;
       border-radius: 12px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
       box-shadow: 0 2px 8px rgba(155, 114, 207, 0.3);
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
 
-    /* 全局即時翻譯提示卡片 */
-    .all-trans-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--lavender-border);
-      border-radius: 16px;
-      padding: 8px 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(155, 114, 207, 0.05);
-      text-align: center;
-    }
-    .all-trans-ko {
-      font-size: 0.84rem;
-      font-weight: 800;
+    .reset-plan-btn {
+      background: var(--lavender-pastel);
+      border: 1.5px solid var(--lavender-primary);
       color: var(--lavender-dark);
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 5px;
+      gap: 3px;
     }
-    .all-trans-zh {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #7B6894;
-      margin-top: 2px;
+
+    /* 航班資訊快捷卡片 */
+    .flight-info-card {
+      background: #FFFFFF;
+      border: 2px solid var(--lavender-border);
+      border-radius: 18px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 14px rgba(155, 114, 207, 0.06);
+    }
+    .flight-info-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--lavender-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .flight-box {
+      background: var(--lavender-pastel);
+      padding: 6px 10px;
+      border-radius: 12px;
+      border-left: 3.5px solid var(--lavender-primary);
+    }
+    .flight-box.pig {
+      border-left-color: var(--accent-badge);
     }
 
     /* Header */
@@ -772,22 +802,37 @@
   <div class="sync-status-bar">
     <div class="sync-indicator">
       <span class="sync-dot" id="syncDot"></span>
-      <span id="syncStatusText">실시간 클라우드 동기화 (雲端即時連線)</span>
+      <span id="syncStatusText">실시간 클라우드 동기화</span>
     </div>
-    <button class="share-link-btn" onclick="copyShareableLink()">
-      <span>🔗</span>
-      <span>공유 링크 복사 (複製網址)</span>
-    </button>
+    <div class="sync-btn-group">
+      <button class="reset-plan-btn" onclick="forceResetToLatestPlan()">
+        <span>🔄</span>
+        <span>최신 일정 로드 (載入最新行程)</span>
+      </button>
+      <button class="share-link-btn" onclick="copyShareableLink()">
+        <span>🔗</span>
+        <span>공유 링크 (複製網址)</span>
+      </button>
+    </div>
   </div>
 
-  <!-- 全區雙向即時翻譯提示卡片 -->
-  <div class="all-trans-card">
-    <div class="all-trans-ko">
-      <span>⚡</span>
-      <span>전 구역 실시간 양방향 번역 & 클라우드 동기화</span>
+  <!-- ✈️ 專屬航班資訊卡片 -->
+  <div class="flight-info-card">
+    <div class="flight-info-title">
+      <span>✈️</span>
+      <span>항공편 & 만남 일정 (專屬航班與集合時間)</span>
     </div>
-    <div class="all-trans-zh">
-      <span>全區支援即時雙向翻譯・修改時確認提醒・照片點擊隨時更換</span>
+    <div class="flight-grid">
+      <div class="flight-box">
+        <div style="color:var(--lavender-primary); font-weight:800;">🎀 DORAMI</div>
+        <div>8/25 13:25 抵達 (Arrive)</div>
+        <div>9/01 13:10 出發 (Leave)</div>
+      </div>
+      <div class="flight-box pig">
+        <div style="color:var(--accent-badge); font-weight:800;">🐷 PIG</div>
+        <div>8/25 18:10 抵達 (Arrive)</div>
+        <div>9/01 19:00 出發 (Leave)</div>
+      </div>
     </div>
   </div>
 
@@ -1843,11 +1888,11 @@
 
 <script>
   let currentModalType = 'cafe';
-  const STORAGE_KEY = 'couple_sync_travel_planner_v14';
+  const STORAGE_KEY = 'couple_sync_travel_planner_v15_fixed';
   
-  // 自動從 URL 讀取 ?room= 房間代碼
+  // 自動從 URL 讀取 ?room= 房間代碼（預設全新房間以防舊資料干擾）
   const urlParams = new URLSearchParams(window.location.search);
-  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG2026';
+  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG_2026_FINAL';
   currentRoomId = currentRoomId.trim().toUpperCase();
   localStorage.setItem('couple_trip_room_id', currentRoomId);
 
@@ -1907,6 +1952,14 @@
       });
     } else {
       prompt('請複製下方專屬連線網址傳給女朋友：', shareableUrl);
+    }
+  }
+
+  function forceResetToLatestPlan() {
+    if (confirm("確定要重設為最新的預設完整行程與地點清單嗎？（這將會把最新排版重新同步至雲端）")) {
+      localStorage.removeItem(STORAGE_KEY);
+      saveAndSync(true);
+      showToast("🔄 已成功載入並同步最新預設行程！");
     }
   }
 
