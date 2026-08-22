@@ -2448,11 +2448,22 @@
 
 <script>
   let currentModalType = 'cafe';
-  // 升級快取版本，避免舊版的部分美食清單覆蓋完整資料。
-  const STORAGE_KEY = 'couple_sync_travel_planner_v2026_full_fixed_v4';
-  const FOOD_LIST_VERSION = 2;
-  const DEFAULT_FOOD_LIST_HTML = document.getElementById('food-list').innerHTML;
-  const DEFAULT_FOOD_CARD_COUNT = document.getElementById('food-list').querySelectorAll('.place-card-m').length;
+  // 升級快取版本，避免舊版雲端的部分清單覆蓋完整內容。
+  const STORAGE_KEY = 'couple_sync_travel_planner_v2026_full_fixed_v5';
+  const LIST_VERSION = 2;
+  const RESTORABLE_COLLECTIONS = {
+    itinerary: { elementId: 'itinerary-content', selector: '.day-panel' },
+    cafeList: { elementId: 'cafe-list', selector: '.place-card-m' },
+    foodList: { elementId: 'food-list', selector: '.place-card-m' },
+    spaList: { elementId: 'spa-list', selector: '.place-card-m' },
+    spotList: { elementId: 'spot-list', selector: '.place-card-m' }
+  };
+
+  Object.values(RESTORABLE_COLLECTIONS).forEach((collection) => {
+    const element = document.getElementById(collection.elementId);
+    collection.defaultHTML = element.innerHTML;
+    collection.defaultCount = element.querySelectorAll(collection.selector).length;
+  });
   
   const urlParams = new URLSearchParams(window.location.search);
   let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG_2026_MASTER_PERFECT';
@@ -2481,14 +2492,14 @@
       const cloudData = snapshot.val();
       if (cloudData && !isReceivingCloudData) {
         isReceivingCloudData = true;
-        const restoredFoodList = renderDataToDOM(cloudData);
+        const restoredCollections = renderDataToDOM(cloudData);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(collectDOMData()));
         showToast('☁️ 상대방의 변경사항이 실시간 동기화되었습니다! (已即時同步更新！)');
         document.getElementById('syncDot').className = 'sync-dot';
         setTimeout(() => {
           isReceivingCloudData = false;
-          // 舊雲端資料沒有版本號且只含部分餐廳時，僅升級一次為完整清單。
-          if (restoredFoodList) saveAndSync();
+          // 舊雲端資料僅升級一次；之後使用者手動增刪的內容會保留。
+          if (restoredCollections.length) saveAndSync();
         }, 300);
       }
     }, (err) => {
@@ -2523,23 +2534,41 @@
   }
 
   function forceResetToLatestPlan() {
-    if (confirm("確定要將網頁上的最新完整 18 家美食與飯店清單重設並同步至雲端嗎？")) {
-      document.getElementById('food-list').innerHTML = DEFAULT_FOOD_LIST_HTML;
+    if (confirm("確定要將網頁上的完整行程、咖啡、美食、按摩與景點清單重設並同步至雲端嗎？")) {
+      restoreDefaultCollections();
       attachInputListeners();
       saveAndSync(true);
-      showToast("🔄 最新完整行程與美食已成功同步至雲端！");
+      showToast("🔄 最新完整清單已成功同步至雲端！");
     }
   }
 
-  function foodCardCount(html) {
+  function collectionItemCount(html, selector) {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = html || '';
-    return wrapper.querySelectorAll('.place-card-m').length;
+    return wrapper.querySelectorAll(selector).length;
   }
 
-  function shouldRestoreFoodList(data) {
-    // 只有未使用新版資料格式的舊資料會被補回完整 18 筆；之後使用者的刪除操作會保留。
-    return !data.foodListVersion && foodCardCount(data.foodList) < DEFAULT_FOOD_CARD_COUNT;
+  function shouldRestoreCollection(data, key) {
+    const collection = RESTORABLE_COLLECTIONS[key];
+    // 只有沒有版本號的舊資料會補齊；新版資料的手動新增或刪除一律保留。
+    return !data[`${key}Version`] && collectionItemCount(data[key], collection.selector) < collection.defaultCount;
+  }
+
+  function renderCollection(data, key) {
+    const collection = RESTORABLE_COLLECTIONS[key];
+    const element = document.getElementById(collection.elementId);
+    if (shouldRestoreCollection(data, key)) {
+      element.innerHTML = collection.defaultHTML;
+      return true;
+    }
+    if (data[key]) element.innerHTML = data[key];
+    return false;
+  }
+
+  function restoreDefaultCollections() {
+    Object.values(RESTORABLE_COLLECTIONS).forEach((collection) => {
+      document.getElementById(collection.elementId).innerHTML = collection.defaultHTML;
+    });
   }
 
   function makeHotelFieldsEditable() {
@@ -2554,27 +2583,18 @@
 
   function renderDataToDOM(data) {
     if (!data) return;
-    const restoredFoodList = shouldRestoreFoodList(data);
+    const restoredCollections = Object.keys(RESTORABLE_COLLECTIONS).filter((key) => renderCollection(data, key));
     if (data.headerEmoji) document.getElementById('headerEmoji').innerHTML = data.headerEmoji;
     if (data.headerBadge) document.getElementById('headerBadge').innerHTML = data.headerBadge;
     if (data.headerTitle) document.getElementById('headerTitle').innerHTML = data.headerTitle;
     if (data.headerSubtitle) document.getElementById('headerSubtitle').innerHTML = data.headerSubtitle;
     if (data.flightInfo && document.getElementById('flightInfoCard')) document.getElementById('flightInfoCard').innerHTML = data.flightInfo;
     if (data.hotelInfo && document.getElementById('hotelInfoCard')) document.getElementById('hotelInfoCard').innerHTML = data.hotelInfo;
-    if (data.itinerary) document.getElementById('itinerary-content').innerHTML = data.itinerary;
     if (data.traffic) document.getElementById('traffic-list').innerHTML = data.traffic;
-    if (data.cafeList) document.getElementById('cafe-list').innerHTML = data.cafeList;
-    if (data.foodList && !restoredFoodList) {
-      document.getElementById('food-list').innerHTML = data.foodList;
-    } else if (restoredFoodList) {
-      document.getElementById('food-list').innerHTML = DEFAULT_FOOD_LIST_HTML;
-    }
-    if (data.spaList && document.getElementById('spa-list')) document.getElementById('spa-list').innerHTML = data.spaList;
-    if (data.spotList && document.getElementById('spot-list')) document.getElementById('spot-list').innerHTML = data.spotList;
     if (data.primaryColor) setCustomPrimaryColor(data.primaryColor);
     makeHotelFieldsEditable();
     attachInputListeners();
-    return restoredFoodList;
+    return restoredCollections;
   }
 
   function collectDOMData() {
@@ -2586,12 +2606,16 @@
       flightInfo: document.getElementById('flightInfoCard') ? document.getElementById('flightInfoCard').innerHTML : '',
       hotelInfo: document.getElementById('hotelInfoCard') ? document.getElementById('hotelInfoCard').innerHTML : '',
       itinerary: document.getElementById('itinerary-content').innerHTML,
+      itineraryVersion: LIST_VERSION,
       traffic: document.getElementById('traffic-list').innerHTML,
       cafeList: document.getElementById('cafe-list').innerHTML,
+      cafeListVersion: LIST_VERSION,
       foodList: document.getElementById('food-list').innerHTML,
-      foodListVersion: FOOD_LIST_VERSION,
+      foodListVersion: LIST_VERSION,
       spaList: document.getElementById('spa-list') ? document.getElementById('spa-list').innerHTML : '',
+      spaListVersion: LIST_VERSION,
       spotList: document.getElementById('spot-list') ? document.getElementById('spot-list').innerHTML : '',
+      spotListVersion: LIST_VERSION,
       lastUpdated: Date.now()
     };
   }
@@ -2937,8 +2961,8 @@
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        const restoredFoodList = renderDataToDOM(parsed);
-        if (restoredFoodList) localStorage.setItem(STORAGE_KEY, JSON.stringify(collectDOMData()));
+        const restoredCollections = renderDataToDOM(parsed);
+        if (restoredCollections.length) localStorage.setItem(STORAGE_KEY, JSON.stringify(collectDOMData()));
       } catch (e) { console.error(e); }
     }
     makeHotelFieldsEditable();
