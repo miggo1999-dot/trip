@@ -147,6 +147,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      outline: none;
     }
     .flight-grid {
       display: grid;
@@ -163,6 +164,9 @@
     }
     .flight-box.pig {
       border-left-color: var(--accent-badge);
+    }
+    .flight-box div {
+      outline: none;
     }
 
     /* 🏨 專屬飯店住宿總覽卡片 */
@@ -189,6 +193,15 @@
     }
     .hotel-overview-box.h2 { border-top-color: var(--lavender-primary); }
     .hotel-overview-box.h3 { border-top-color: #59CD90; }
+    .hotel-overview-box div {
+      outline: none;
+      word-break: break-word;
+    }
+    .hotel-info-card [contenteditable="true"]:focus {
+      background: #FFFFFF;
+      border-radius: 5px;
+      box-shadow: 0 0 0 2px var(--lavender-light);
+    }
 
     /* Header */
     header {
@@ -840,47 +853,47 @@
     </div>
   </div>
 
-  <!-- ✈️ 專屬航班資訊卡片 -->
+  <!-- ✈️ 專屬航班資訊卡片 (全區可編輯) -->
   <div class="flight-info-card" id="flightInfoCard">
-    <div class="flight-info-title">
+    <div class="flight-info-title" contenteditable="true">
       <span>✈️</span>
       <span>항공편 & 만남 일정 (專屬航班與集合時間)</span>
     </div>
     <div class="flight-grid">
       <div class="flight-box">
-        <div style="color:var(--lavender-primary); font-weight:800;">🎀 DORAMI</div>
-        <div>8/25 13:25 抵達 (Arrive)</div>
-        <div>9/01 13:10 出發 (Leave)</div>
+        <div style="color:var(--lavender-primary); font-weight:800;" contenteditable="true">🎀 DORAMI</div>
+        <div contenteditable="true">8/25 13:25 抵達 (Arrive)</div>
+        <div contenteditable="true">9/01 13:10 出發 (Leave)</div>
       </div>
       <div class="flight-box pig">
-        <div style="color:var(--accent-badge); font-weight:800;">🐷 PIG</div>
-        <div>8/25 18:10 抵達 (Arrive)</div>
-        <div>9/01 19:00 出發 (Leave)</div>
+        <div style="color:var(--accent-badge); font-weight:800;" contenteditable="true">🐷 PIG</div>
+        <div contenteditable="true">8/25 18:10 抵達 (Arrive)</div>
+        <div contenteditable="true">9/01 19:00 出發 (Leave)</div>
       </div>
     </div>
   </div>
 
-  <!-- 🏨 專屬飯店住宿總覽卡片 -->
+  <!-- 🏨 專屬飯店住宿總覽卡片 (全區可編輯) -->
   <div class="hotel-info-card" id="hotelInfoCard">
-    <div class="flight-info-title">
+    <div class="flight-info-title" contenteditable="true">
       <span>🏨</span>
       <span>숙소 & 호텔 일정 (8天7夜飯店住宿總覽)</span>
     </div>
     <div class="hotel-grid">
       <div class="hotel-overview-box">
-        <div style="color:#8E2A59; font-weight:800;">📍 Day 1 (峴港)</div>
-        <div>무엉탄 럭셔리 호텔</div>
-        <div style="color:#7B6894; font-size:0.72rem;">Mường Thanh Luxury</div>
+        <div style="color:#8E2A59; font-weight:800;" contenteditable="true">📍 Day 1 (峴港)</div>
+        <div contenteditable="true">무엉탄 럭셔리 호텔</div>
+        <div style="color:#7B6894; font-size:0.72rem;" contenteditable="true">Mường Thanh Luxury</div>
       </div>
       <div class="hotel-overview-box h2">
-        <div style="color:var(--lavender-primary); font-weight:800;">📍 Day 2~3 (會安)</div>
-        <div>호이안 올드타운 리조트</div>
-        <div style="color:#7B6894; font-size:0.72rem;">Hoi An Boutique Resort</div>
+        <div style="color:var(--lavender-primary); font-weight:800;" contenteditable="true">📍 Day 2~3 (會安)</div>
+        <div contenteditable="true">호이안 올드타운 리조트</div>
+        <div style="color:#7B6894; font-size:0.72rem;" contenteditable="true">Hoi An Boutique Resort</div>
       </div>
       <div class="hotel-overview-box h3">
-        <div style="color:#215494; font-weight:800;">📍 Day 4~7 (美溪沙灘)</div>
-        <div>미케비치 오션뷰 호텔</div>
-        <div style="color:#7B6894; font-size:0.72rem;">My Khe Oceanview Hotel</div>
+        <div style="color:#215494; font-weight:800;" contenteditable="true">📍 Day 4~7 (美溪沙灘)</div>
+        <div contenteditable="true">미케비치 오션뷰 호텔</div>
+        <div style="color:#7B6894; font-size:0.72rem;" contenteditable="true">My Khe Oceanview Hotel</div>
       </div>
     </div>
   </div>
@@ -1667,7 +1680,7 @@
     </div>
   </div>
 
-  <!-- ==================== 頁面 4: 美食餐廳 (18處) ==================== -->
+  <!-- ==================== 頁面 4: 美食餐廳 (完整 18 處) ==================== -->
   <div id="tab-food" class="page-view">
     <div class="mobile-card">
       <div class="mobile-card-header">
@@ -2435,11 +2448,14 @@
 
 <script>
   let currentModalType = 'cafe';
-  // 更新 STORAGE_KEY 與 room 以防止舊快取覆蓋
-  const STORAGE_KEY = 'couple_sync_travel_planner_v2026_full';
+  // 升級快取版本，避免舊版的部分美食清單覆蓋完整資料。
+  const STORAGE_KEY = 'couple_sync_travel_planner_v2026_full_fixed_v4';
+  const FOOD_LIST_VERSION = 2;
+  const DEFAULT_FOOD_LIST_HTML = document.getElementById('food-list').innerHTML;
+  const DEFAULT_FOOD_CARD_COUNT = document.getElementById('food-list').querySelectorAll('.place-card-m').length;
   
   const urlParams = new URLSearchParams(window.location.search);
-  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG_2026_MASTER_FULL';
+  let currentRoomId = urlParams.get('room') || localStorage.getItem('couple_trip_room_id') || 'DANANG_2026_MASTER_PERFECT';
   currentRoomId = currentRoomId.trim().toUpperCase();
   localStorage.setItem('couple_trip_room_id', currentRoomId);
 
@@ -2465,11 +2481,15 @@
       const cloudData = snapshot.val();
       if (cloudData && !isReceivingCloudData) {
         isReceivingCloudData = true;
-        renderDataToDOM(cloudData);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudData));
+        const restoredFoodList = renderDataToDOM(cloudData);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(collectDOMData()));
         showToast('☁️ 상대방의 변경사항이 실시간 동기화되었습니다! (已即時同步更新！)');
         document.getElementById('syncDot').className = 'sync-dot';
-        setTimeout(() => { isReceivingCloudData = false; }, 300);
+        setTimeout(() => {
+          isReceivingCloudData = false;
+          // 舊雲端資料沒有版本號且只含部分餐廳時，僅升級一次為完整清單。
+          if (restoredFoodList) saveAndSync();
+        }, 300);
       }
     }, (err) => {
       console.warn("Cloud status:", err);
@@ -2489,29 +2509,52 @@
   }
 
   function copyShareableLink() {
-    const baseUrl = "https://miggo1999-dot.github.io/Danang-trip/";
+    const baseUrl = window.location.origin + window.location.pathname;
     const shareableUrl = baseUrl + '?room=' + currentRoomId;
     
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(shareableUrl).then(() => {
         showToast('🔗 전용 공유 링크가 복사되었습니다! (專屬網址已複製！)');
-        alert('專屬同步網址已複製到剪貼簿！\n\n將網址傳給女朋友，雙方手機即可 100% 即時雙向同步：\n' + shareableUrl);
+        alert('專屬同步網址已複製到剪貼簿！\n\n雙方使用此網址即可 100% 即時雙向同步：\n' + shareableUrl);
       });
     } else {
-      prompt('請複製下方專屬連線網址傳給女朋友：', shareableUrl);
+      prompt('請複製下方專屬連線網址：', shareableUrl);
     }
   }
 
   function forceResetToLatestPlan() {
-    if (confirm("確定要將網頁上的最新完整地點與航班重設並同步至雲端嗎？")) {
-      localStorage.removeItem(STORAGE_KEY);
+    if (confirm("確定要將網頁上的最新完整 18 家美食與飯店清單重設並同步至雲端嗎？")) {
+      document.getElementById('food-list').innerHTML = DEFAULT_FOOD_LIST_HTML;
+      attachInputListeners();
       saveAndSync(true);
-      showToast("🔄 最新完整行程已成功同步至雲端！");
+      showToast("🔄 最新完整行程與美食已成功同步至雲端！");
     }
+  }
+
+  function foodCardCount(html) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html || '';
+    return wrapper.querySelectorAll('.place-card-m').length;
+  }
+
+  function shouldRestoreFoodList(data) {
+    // 只有未使用新版資料格式的舊資料會被補回完整 18 筆；之後使用者的刪除操作會保留。
+    return !data.foodListVersion && foodCardCount(data.foodList) < DEFAULT_FOOD_CARD_COUNT;
+  }
+
+  function makeHotelFieldsEditable() {
+    const hotelCard = document.getElementById('hotelInfoCard');
+    if (!hotelCard) return;
+    document.querySelectorAll('#hotelInfoCard .flight-info-title, #hotelInfoCard .hotel-overview-box > div, .hotel-stay-title-ko, .hotel-stay-title-zh').forEach((field) => {
+      field.setAttribute('contenteditable', 'true');
+      field.setAttribute('spellcheck', 'false');
+      field.setAttribute('aria-label', '飯店資訊，可直接修改');
+    });
   }
 
   function renderDataToDOM(data) {
     if (!data) return;
+    const restoredFoodList = shouldRestoreFoodList(data);
     if (data.headerEmoji) document.getElementById('headerEmoji').innerHTML = data.headerEmoji;
     if (data.headerBadge) document.getElementById('headerBadge').innerHTML = data.headerBadge;
     if (data.headerTitle) document.getElementById('headerTitle').innerHTML = data.headerTitle;
@@ -2521,11 +2564,17 @@
     if (data.itinerary) document.getElementById('itinerary-content').innerHTML = data.itinerary;
     if (data.traffic) document.getElementById('traffic-list').innerHTML = data.traffic;
     if (data.cafeList) document.getElementById('cafe-list').innerHTML = data.cafeList;
-    if (data.foodList) document.getElementById('food-list').innerHTML = data.foodList;
+    if (data.foodList && !restoredFoodList) {
+      document.getElementById('food-list').innerHTML = data.foodList;
+    } else if (restoredFoodList) {
+      document.getElementById('food-list').innerHTML = DEFAULT_FOOD_LIST_HTML;
+    }
     if (data.spaList && document.getElementById('spa-list')) document.getElementById('spa-list').innerHTML = data.spaList;
     if (data.spotList && document.getElementById('spot-list')) document.getElementById('spot-list').innerHTML = data.spotList;
     if (data.primaryColor) setCustomPrimaryColor(data.primaryColor);
+    makeHotelFieldsEditable();
     attachInputListeners();
+    return restoredFoodList;
   }
 
   function collectDOMData() {
@@ -2540,6 +2589,7 @@
       traffic: document.getElementById('traffic-list').innerHTML,
       cafeList: document.getElementById('cafe-list').innerHTML,
       foodList: document.getElementById('food-list').innerHTML,
+      foodListVersion: FOOD_LIST_VERSION,
       spaList: document.getElementById('spa-list') ? document.getElementById('spa-list').innerHTML : '',
       spotList: document.getElementById('spot-list') ? document.getElementById('spot-list').innerHTML : '',
       lastUpdated: Date.now()
@@ -2808,7 +2858,7 @@
   // ==================== 📷 更換圖片功能 ====================
   const PHOTO_PRESETS = [
     { name: "🌊 美溪海灘 (My Khe Beach)", url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" },
-    { name: "🏮 會安古鎮 (Hoi An Town)", url: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" },
+    { name: "🏮 會安古鎮 (Hoi An Town)", url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" },
     { name: "🏰 巴拿山佛手橋 (Ba Na Hills)", url: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" },
     { name: "🏖️ 安邦海灘度假 (An Bang Beach)", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" },
     { name: "🍧 芒果雪花冰 (Mango Bingsu)", url: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" },
@@ -2871,8 +2921,15 @@
   function attachInputListeners() {
     document.querySelectorAll('[contenteditable="true"]').forEach(el => {
       el.removeEventListener('input', handleLiveTranslateInput);
+      el.removeEventListener('blur', handleEditableBlur);
       el.addEventListener('input', handleLiveTranslateInput);
+      el.addEventListener('blur', handleEditableBlur);
     });
+  }
+
+  function handleEditableBlur() {
+    // 讓飯店欄位與其他可編輯文字在離開欄位時立即儲存，不必等待翻譯計時器。
+    if (!isReceivingCloudData) saveAndSync();
   }
 
   window.addEventListener('DOMContentLoaded', () => {
@@ -2880,9 +2937,11 @@
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        renderDataToDOM(parsed);
+        const restoredFoodList = renderDataToDOM(parsed);
+        if (restoredFoodList) localStorage.setItem(STORAGE_KEY, JSON.stringify(collectDOMData()));
       } catch (e) { console.error(e); }
     }
+    makeHotelFieldsEditable();
     attachInputListeners();
   });
 </script>
